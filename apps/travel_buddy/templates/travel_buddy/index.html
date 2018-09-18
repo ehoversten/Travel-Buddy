@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Travel Buddy</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'travel_buddy/css/travel_styles.css' %}">
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <div class="navbar">
+          <a class="navbar-brand" href="/travels">
+            <img src="{% static 'travel_buddy/img/airplane_logo.png'%}" alt="airplane logo">
+          </a>
+          <h1>Travel Buddy with Django</h1>
+        </div>
+      </div>
+      <div class="main_container">
+
+        <div class="registration">
+          <h2>Registration</h2>
+          <div class="registration_messages">
+            {% if messages %}
+              {% for message in messages %}
+                {% if 'register' in message.tags %}
+                  <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
+          <form class="form-group" action="travels/process_reg" method="post">
+            {% csrf_token %}
+            Name:<input type="text" name="name" value="">
+            Username:<input type="text" name="username" value="">
+            Password: <input type="password" name="passwd" value="">
+            Confirm Password: <input type="password" name="pass_confirm" value="">
+            <input class="btn btn-warning" type="submit" name="submit_reg" value="Register">
+          </form>
+        </div>
+        <div class="login">
+          <h2>Login</h2>
+          <div class="login_messages">
+            {% if messages %}
+              {% for message in messages %}
+                {% if 'login' in message.tags %}
+                  <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
+          <form class="form-group" action="travels/process_login" method="post">
+            {% csrf_token %}
+            Username: <input type="text" name="username" value="">
+            Password: <input type="password" name="passwd" value="">
+            <input class="btn btn-warning" type="submit" name="submit_log" value="Login">
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
