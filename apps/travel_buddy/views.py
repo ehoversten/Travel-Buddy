@@ -1,12 +1,28 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .models import *
 from django.contrib import messages
+from django.views.generic import TemplateView
+from django.views.generic import CreateView
 
-# Create your views here.
+from .models import *
+from .forms import LoginForm
+
+"""
 def index(request):
     # User.objects.all().delete()
     # Destination.objects.all().delete()
     return render(request, 'travel_buddy/index.html')
+"""
+
+"""Can replace index function."""
+class IndexView(TemplateView):
+    template_name = "travel_buddy/index.html"
+    form_class = LoginForm
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context["form"] = LoginForm()
+        return context
+
 
 def home(request):
     this_user_id = request.session['id']
@@ -24,6 +40,22 @@ def home(request):
     return render(request, 'travel_buddy/home.html', context)
 
 
+"""Can replace home function."""
+class HomeView(TemplateView):
+    template_name = "travel_buddy/home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        this_user_id = self.request.session['id']
+        this_user = User.objects.get(id=int(this_user_id))
+        my_trips = this_user.have_joined.all()
+        all_trips = Destination.objects.exclude(users_on_trip=this_user_id)
+
+        context["all_trips"] = all_trips
+        context["my_trips"] = my_trips
+        return context
+
+"""
 def show(request, id):
 # --- SET variable to retrieve the OBJECT tied to the recieved ID ---
     this_dest = Destination.objects.get(id=id)
@@ -45,15 +77,33 @@ def show(request, id):
     }
 # --- Pass our OBJECT in our context to our HTML view
     return render(request, 'travel_buddy/show.html', context)
+"""
+
+"""Can replace show function."""
+class ShowView(TemplateView):
+    template_name = 'travel_buddy/show.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ShowView, self).get_context_data(**kwargs)
+        url = self.request.path_info
+        url = int(url.replace("/travels/destination/", ""))
+        this_dest = Destination.objects.get(id=url)
+        other_users = this_dest.users_on_trip.exclude(id=this_dest.planner_id)
+        context["destination"] = this_dest
+        context["others"] = other_users
+        return context
+
 
 
 def process_reg(request):
     results = User.objects.reg_validator(request.POST)
 
     if results[0]:
+        # Do not understand this code completly. User info stores in session automatically wtih django.  Also, do think you think it would be good to redirect to index to login in in any case?
         request.session['id'] = results[1].id
         request.session['name'] = results[1].name
-        return redirect('/travels')
+        print("reg success")
+        return redirect('/main')
     else:
         for error in results[1]:
             messages.add_message(request, messages.ERROR, error, extra_tags='register')
@@ -70,9 +120,6 @@ def process_login(request):
         for error in results[1]:
             messages.add_message(request, messages.ERROR, error, extra_tags='login')
         return redirect('/main')
-
-    # return redirect('/main')
-
 
 def process_add(request):
 # --- Pass in the request.POST **and** SESSION
@@ -93,21 +140,17 @@ def process_add(request):
 def add_trip(request):
     return render(request, 'travel_buddy/add.html')
 
+
+"""Can replace index function."""
+class AddTripView(TemplateView):
+    template_name = "travel_buddy/add.html"
+
+
 def join_trip(request, trip_id):
     user_id = request.session['id']
-    # print("*"*25)
-    # print('user_id: ', user_id)
-    # print('\n')
     user_to_join = User.objects.get(id=user_id)
-    # print("*"*25)
-    # print('user_to_join: ', user_to_join.name)
-    # print('\n')
     this_trip = Destination.objects.get(id=trip_id)
-    # print("*"*25)
-    # print('This TRIP object name: ', this_trip.location)
-    # print('\n')
     user_to_join.have_joined.add(this_trip)
-    # this_trip.users.add(user_to_join)
     return redirect('/travels')
 
 

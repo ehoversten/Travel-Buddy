@@ -1,0 +1,11 @@
+bcrypt==3.1.4
+cffi==1.11.5
+Django==2.1.1
+django-crispy-forms==1.7.2
+factory-boy==2.11.1
+Faker==0.9.1
+pycparser==2.19
+python-dateutil==2.7.3
+pytz==2018.5
+six==1.11.0
+text-unidecode==1.2
