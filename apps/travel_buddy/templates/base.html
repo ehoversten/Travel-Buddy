@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Travel Buddy</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'travel_buddy/css/travel_styles.css' %}">
+    {% block extra_style %}{% endblock %}
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="navbar">
+        <a class="navbar-brand" href="/travels">
+          <img src="{% static 'travel_buddy/img/airplane_logo.png'%}" alt="airplane logo">
+        </a>
+        <h1>Travel Buddy with Django</h1>
+        <div class="row">
+          <h3>{{ request.session.username }}</h3>
+          <a href="/travels"><button class="btn btn-primary" type="button" name="home_btn">Home</button></a>
+          <a href="/logout"><button class="btn btn-warning" type="button" name="logout_btn">Logout</button></a>
+        </div>
+      </div>
+    </div>
+
+    {% block body %}{% endblock %}
+
+  </body>
+  {% block extra_js %}{% endblock %}
+</html>
