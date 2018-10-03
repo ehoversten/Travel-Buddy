@@ -2,11 +2,48 @@ from django.shortcuts import render, HttpResponse, redirect
 from .models import *
 from django.contrib import messages
 
-# Create your views here.
+
+""" Get Routes """
+
+
 def index(request):
-    # User.objects.all().delete()
-    # Destination.objects.all().delete()
     return render(request, 'travel_buddy/index.html')
+
+
+def process_reg(request):
+    results = User.objects.reg_validator(request.POST)
+
+    if results[0]:
+        request.session['id'] = results[1].id
+        request.session['name'] = results[1].name
+        return redirect('/travels')
+    else:
+        for error in results[1]:
+            messages.add_message(request, messages.ERROR,
+                                 error, extra_tags='register')
+        return redirect('/main')
+
+
+def process_login(request):
+    results = User.objects.loginValidator(request.POST)
+
+    if results[0]:
+        request.session['id'] = results[1].id
+        request.session['name'] = results[1].name
+        return redirect('/travels')
+    else:
+        for error in results[1]:
+            messages.add_message(request, messages.ERROR,
+                                 error, extra_tags='login')
+        return redirect('/main')
+
+    # return redirect('/main')
+
+
+def logout(request):
+    request.session.clear()
+    return redirect('/main')
+
 
 def home(request):
     this_user_id = request.session['id']
@@ -18,16 +55,16 @@ def home(request):
     all_trips = Destination.objects.exclude(users_on_trip=this_user_id)
 
     context = {
-        'all_trips' : all_trips,
-        'my_trips' : my_trips,
+        'all_trips': all_trips,
+        'my_trips': my_trips,
     }
-    return render(request, 'travel_buddy/home.html', context)
+    return render(request, 'travel_buddy/dashboard.html', context)
 
 
 def show(request, id):
-# --- SET variable to retrieve the OBJECT tied to the recieved ID ---
+    # --- SET variable to retrieve the OBJECT tied to the recieved ID ---
     this_dest = Destination.objects.get(id=id)
-# *** TEST ***
+    """  TEST  """
     print("-"*25)
     print('Destination OBJECT contains: ', this_dest.location)
     print("-"*25)
@@ -40,58 +77,32 @@ def show(request, id):
 
 # --- Assign our VARIABLE within our CONTEXT DICTIONARY for passing to our views ---
     context = {
-        'destination' : this_dest,
-        'others' : other_users,
+        'destination': this_dest,
+        'others': other_users,
     }
 # --- Pass our OBJECT in our context to our HTML view
     return render(request, 'travel_buddy/show.html', context)
 
 
-def process_reg(request):
-    results = User.objects.reg_validator(request.POST)
-
-    if results[0]:
-        request.session['id'] = results[1].id
-        request.session['name'] = results[1].name
-        return redirect('/travels')
-    else:
-        for error in results[1]:
-            messages.add_message(request, messages.ERROR, error, extra_tags='register')
-        return redirect('/main')
-
-def process_login(request):
-    results = User.objects.loginValidator(request.POST)
-
-    if results[0]:
-        request.session['id'] = results[1].id
-        request.session['name'] = results[1].name
-        return redirect('/travels')
-    else:
-        for error in results[1]:
-            messages.add_message(request, messages.ERROR, error, extra_tags='login')
-        return redirect('/main')
-
-    # return redirect('/main')
+def add_trip(request):
+    return render(request, 'travel_buddy/add.html')
 
 
 def process_add(request):
-# --- Pass in the request.POST **and** SESSION
+    # --- Pass in the request.POST **and** SESSION
     results = Destination.objects.dest_validator(request.POST, int(request.session['id']))
     print("*"*25)
     print('RESULTS: ', results)
     print("*"*25)
 
     if results[0]:
-
         return redirect('/travels')
     else:
         for error in results[1]:
-            messages.add_message(request, messages.ERROR, error, extra_tags='register')
+            messages.add_message(request, messages.ERROR,error, extra_tags='register')
         return redirect('/travels/add')
     return redirect('/')
 
-def add_trip(request):
-    return render(request, 'travel_buddy/add.html')
 
 def join_trip(request, trip_id):
     user_id = request.session['id']
@@ -109,8 +120,3 @@ def join_trip(request, trip_id):
     user_to_join.have_joined.add(this_trip)
     # this_trip.users.add(user_to_join)
     return redirect('/travels')
-
-
-def logout(request):
-    request.session.clear()
-    return redirect('/main')

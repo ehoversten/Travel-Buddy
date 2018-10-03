@@ -5,6 +5,7 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^main$', views.index),
     url(r'^travels$', views.home),
+    
     url(r'^travels/process_reg$', views.process_reg),
     url(r'^travels/process_login$', views.process_login),
     url(r'^travels/process_add$', views.process_add),
