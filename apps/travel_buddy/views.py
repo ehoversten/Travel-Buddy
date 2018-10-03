@@ -1,13 +1,11 @@
-from django.shortcuts import render, HttpResponse, redirect
-from .models import *
 from django.contrib import messages
+from django.shortcuts import HttpResponse, redirect, render
+
+from .models import Destination, User
 
 
-""" Get Routes """
-
-
-def index(request):
-    return render(request, 'travel_buddy/index.html')
+def trip_log_reg(request):
+    return render(request, 'travel_buddy/tip_log-reg.html')
 
 
 def process_reg(request):
@@ -20,7 +18,7 @@ def process_reg(request):
     else:
         for error in results[1]:
             messages.add_message(request, messages.ERROR,
-                                 error, extra_tags='register')
+  error, extra_tags='register')
         return redirect('/main')
 
 
@@ -58,7 +56,7 @@ def home(request):
         'all_trips': all_trips,
         'my_trips': my_trips,
     }
-    return render(request, 'travel_buddy/dashboard.html', context)
+    return render(request, 'travel_buddy/trip_dashboard.html', context)
 
 
 def show(request, id):
@@ -81,11 +79,11 @@ def show(request, id):
         'others': other_users,
     }
 # --- Pass our OBJECT in our context to our HTML view
-    return render(request, 'travel_buddy/show.html', context)
+    return render(request, 'travel_buddy/trip_show.html', context)
 
 
 def add_trip(request):
-    return render(request, 'travel_buddy/add.html')
+    return render(request, 'travel_buddy/trip_add.html')
 
 
 def process_add(request):
@@ -119,4 +117,21 @@ def join_trip(request, trip_id):
     # print('\n')
     user_to_join.have_joined.add(this_trip)
     # this_trip.users.add(user_to_join)
+    return redirect('/travels')
+
+
+def leave_trip(request, trip_id):
+    print(trip_id + "Not sure if this worked.")
+    user_id = request.session['id']
+
+    user_to_join = User.objects.get(id=user_id)
+
+    this_trip = Destination.objects.get(id=trip_id)
+
+    user_to_join.have_joined.remove(this_trip)
+    return redirect('/travels')
+
+def trip_delete(req, trip_id):
+    this_trip = Destination.objects.get(id=trip_id)
+    this_trip.remove()
     return redirect('/travels')

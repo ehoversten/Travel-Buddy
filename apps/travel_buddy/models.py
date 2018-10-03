@@ -25,8 +25,8 @@ class UserManager(models.Manager):
             errors.append("Passwords do not match")
 
         if not errors:
-            hash1 = bcrypt.hashpw(form['pass'].encode(), bcrypt.gensalt())
-            user = User.objects.create( name=form['name'], username=form['username'], password=hash1)
+            hash1 = bcrypt.hashpw(form['passwd'].encode(), bcrypt.gensalt())
+            user = User.objects.create( name=form['name'], username=form['username'], passwd=hash1)
             # hashed_pass = bcrypt.hashpw(form['passwd'].encode(), bcrypt.gensalt())
             # user = User.objects.create(name=form['name'], username=form['username'], passwd=hashed_pass.decode("utf-8"))
 
@@ -77,25 +77,17 @@ class DestinationManager(models.Manager):
 
 
         if not errors:
-
             this_user = User.objects.get(id=user_id)
-            print("*"*25)
-            print('THIS USER: ', this_user)
-            print("*"*25)
-
             location = Destination.objects.create(location=form['location'], description=form['description'], planner=this_user, start_date=form['start_date'], end_date=form['end_date'])
+
+            # before returning the location we add it to the logged-in users list.
             this_user.have_joined.add(location)
-
-
-            print("-"*25)
-            print('THIS LOCATION: ', location)
-            print("-"*25)
 
             return (True, location)
         else:
             return (False, errors)
 
-# Create your models here.
+
 class User(models.Model):
     name       = models.CharField(max_length=255)
     username   = models.CharField(max_length=255)
