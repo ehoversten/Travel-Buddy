@@ -5,7 +5,7 @@ from .models import Destination, User
 
 
 def trip_log_reg(request):
-    return render(request, 'travel_buddy/tip_log-reg.html')
+    return render(request, 'travel_buddy/trip_log-reg.html')
 
 
 def process_reg(request):

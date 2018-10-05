@@ -5,12 +5,12 @@ urlpatterns = [
     url(r'^$', views.trip_log_reg),
     url(r'^main$', views.trip_log_reg),
     url(r'^travels$', views.home),
-    
+
     url(r'^travels/process_reg$', views.process_reg),
     url(r'^travels/process_login$', views.process_login),
     url(r'^travels/process_add$', views.process_add),
     url(r'^process_add$', views.process_add),
-        # Remove it from logged in users plans 
+        # Remove it from logged in users plans
     url(r'^travels/leave_trip/(?P<trip_id>\d+)$', views.leave_trip),
 
     url(r'^travels/add$', views.add_trip),

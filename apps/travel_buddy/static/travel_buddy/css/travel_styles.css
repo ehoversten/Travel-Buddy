@@ -115,9 +115,14 @@ button {
   margin-top: 15px;
 }
 
+.form_container {
+  width: 75%;
+}
+
 .user_trips, .others_trips{
   margin: 0px auto;
 }
+
 .trip_add {
-  width: 500px;
+  width: 75%;
 }

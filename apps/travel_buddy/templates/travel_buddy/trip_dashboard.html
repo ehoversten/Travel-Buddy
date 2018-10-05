@@ -4,7 +4,11 @@
     <meta charset="utf-8">
     <title>Travel Buddy</title>
     {% load static %}
+    <!-- LOAD BOOTSTRAP  -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <!-- LOAD JQuery  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- LOAD CSS STYLESHEET -->
     <link rel="stylesheet" href="{% static 'travel_buddy/css/travel_styles.css' %}">
   </head>
   <body>
@@ -19,7 +23,6 @@
         </div>
       </div>
 
-
       <div class="container">
 
         <div class="user_trips">
@@ -28,7 +31,7 @@
             <table class="table table-dark text-center" >
               <thead>
                 <tr >
-                  <th scope="col">#</th> 
+                  <th scope="col">#</th>
                   <th scope="col">Destination</th>
                   <th scope="col">Travel Start Date</th>
                   <th scope="col">Travel End Date</th>
@@ -50,8 +53,27 @@
           </div>
 
           <div class="row">
-            <a href="/travels/add"><button class="btn btn-warning" type="button" name="button">Add Travel Plan</button></a>
+            <!-- <a href="/travels/add"><button class="add_trip_btn btn btn-warning" type="button" name="button">Add Travel Plan</button></a> -->
+
+            <button class="add_trip_btn btn btn-warning" type="button" name="button">Add Travel Plan</button>
           </div>
+
+          <div class="form_container">
+
+            <form class="form-group" action="/process_add" method="post">
+              {% csrf_token %}
+              Destination:<input type="text" name="location" value="">
+
+              Description:<input type="text" name="description" value="">
+
+              Travel Date From:<input id="start_datepicker" type="date" name="start_date" min="2018-05-21" value="" required>
+
+              Travel Date To:<input id="end_datepicker" type="date" name="end_date" min="2018-05-21" value="" required>
+
+              <input class="btn btn-success" type="submit" name="submit_dest" value="Add Destination">
+            </form>
+          </div>
+
         </div>
 
 
@@ -89,5 +111,18 @@
         </div>
       </div>
     </div>
+    <!-- ADD JQuery/JavaScript code -->
+    <script type="text/javascript">
+      $(document).ready(function() {
+
+        $('.form_container').hide();
+
+        $('.add_trip_btn').click(function() {
+          $('.form_container').slideToggle("blind");
+        })
+      });
+    </script>
+
+
   </body>
 </html>
