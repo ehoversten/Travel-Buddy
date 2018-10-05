@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'travel_buddy/css/travel_styles.css' %}">
+    <title>Travel Buddy</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <div class="navbar">
+          <a class="navbar-brand" href="/travels">
+            <img src="{% static 'travel_buddy/img/airplane_logo.png'%}" alt="airplane logo">
+          </a>
+          <h1>Travel Buddy</h1>
+          <div class="row">
+            <a href="/travels"><button class="btn btn-primary" type="button" name="home_btn">Home</button></a>
+            <a href="/logout"><button class="btn btn-warning" type="button" name="logout_btn">Logout</button></a>
+          </div>
+        </div>
+      </div>
+      <div id='add_new' class="container">
+
+        <div class="trip_add">
+          <h2>{{ request.session.name }}, Add a Trip</h2>
+          <div class="registration_messages">
+            {% if messages %}
+              {% for message in messages %}
+              <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+              {% endfor %}
+            {% endif %}
+          </div>
+          <form class="form-group" action="/process_add" method="post">
+            {% csrf_token %}
+            Destination:<input type="text" name="location" value="">
+            Description:<input type="text" name="description" value="">
+
+            Travel Date From: <input id="start_datepicker" type="date" name="start_date" min="2018-05-21" value="" required>
+            
+            Travel Date To: <input id="end_datepicker" type="date" name="end_date" min="2018-05-21" value="" required>
+            <input class="btn btn-success" type="submit" name="submit_dest" value="Add Destination">
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
