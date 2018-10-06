@@ -23,4 +23,7 @@ urlpatterns = [
     # url(r'^travels/join_trip$', views.join_trip),
     url(r'^travels/join_trip/(?P<trip_id>\d+)$', views.join_trip),
 
+
+    url(r'^travels/ajax_testing$', views.ajax_testing),
+
 ]

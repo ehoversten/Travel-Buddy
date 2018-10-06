@@ -1,8 +1,22 @@
 from django.contrib import messages
 from django.shortcuts import HttpResponse, redirect, render
+from django.core import serializers
 
 from .models import Destination, User
 
+def ajax_testing(request):
+    this_user_id = request.session['id']
+    this_user = User.objects.get(id=int(this_user_id))
+    my_trips = this_user.have_joined.all()
+    my_trips_json = serializers.serialize("json", my_trips)
+    print(my_trips_json)
+
+    context = {
+        'my_trips_json': my_trips_json,
+    }
+
+    return HttpResponse(my_trips_json, content_type='application/json')
+    # return HttpResponse("I have been JSON Summoned!")
 
 def trip_log_reg(request):
     return render(request, 'travel_buddy/trip_log-reg.html')

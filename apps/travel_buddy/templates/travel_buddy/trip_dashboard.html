@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <title>Travel Buddy</title>
     {% load static %}
-    <!-- LOAD BOOTSTRAP  -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <!-- LOAD JQuery  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- LOAD BOOTSTRAP  -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <!-- LOAD CSS STYLESHEET -->
     <link rel="stylesheet" href="{% static 'travel_buddy/css/travel_styles.css' %}">
   </head>
@@ -55,12 +55,15 @@
           <div class="row">
             <!-- <a href="/travels/add"><button class="add_trip_btn btn btn-warning" type="button" name="button">Add Travel Plan</button></a> -->
 
-            <button class="add_trip_btn btn btn-warning" type="button" name="button">Add Travel Plan</button>
+            <button id='add_trip_btn' class="btn btn-warning" type="button" name="button">Add Travel Plan</button>
+
+            <button id="ajax_btn" class="btn btn-success" type="button" name="button">AJAX Testing</button>
           </div>
 
           <div class="form_container">
-
-            <form class="form-group" action="/process_add" method="post">
+            <h1>Demo 3 - Ajax Form II</h1>
+            <h2>Create a new trip</h2>
+            <form id="add_trip_ajax_form" class="form-group" action="/process_add" method="post">
               {% csrf_token %}
               Destination:<input type="text" name="location" value="">
 
@@ -72,7 +75,12 @@
 
               <input class="btn btn-success" type="submit" name="submit_dest" value="Add Destination">
             </form>
+
+            <div id='placeholder3' style='margin-top:35px; border:1px solid silver; width:750px; padding:10px;'>
+                Placeholder for the Ajax Form part II
+            </div>
           </div>
+
 
         </div>
 
@@ -117,9 +125,38 @@
 
         $('.form_container').hide();
 
-        $('.add_trip_btn').click(function() {
+        $('#add_trip_btn').click(function() {
+          console.log("add trip form toggled");
           $('.form_container').slideToggle("blind");
+        });
+
+
+        $('#ajax_btn').click(function() {
+          console.log("ajax button clicked");
+          $.ajax({
+            url: 'travels/ajax_testing',
+            success: function(serverResponse) {
+              console.log("success, Server Response: ", serverResponse);
+            }
+          })
+        });
+
+        $('#add_trip_ajax_form').submit(function(e) {
+          e.preventDefault();
+          console.log("ajax form submission");
+          $.ajax({
+            url: $(this).attr('action'),
+            method: 'post',
+            data: $(this).serialize(),
+            success: function(serverResponse) {
+              console.log("success, Server Response: ", serverResponse);
+              $('#placeholder3').html(serverResponse)
+            }
+          })
         })
+
+
+
       });
     </script>
 
