@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     {% load static %}
-    <!--JQuery  -->
+    <!--JQuery  --> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- BOOTSTRAP  -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
@@ -27,7 +27,7 @@
       <!-- Main Content -->
       <div class="container">
 
-        <div class="user_trips">
+        <div class="user_trips" id="Testing">
           <h4 class="text-center">Your Scheduled Trips</h4>
           <div class="table_container">
             <table class="table table-dark text-center" >
@@ -124,6 +124,9 @@
     </div>
     <!-- Scripts -->
     <script src="{% static 'travel_buddy/js/Ajaxform.js' %}"></script>
-
+ <!--  <script>
+    let url = "static/travel_buddy/js/AjaxForm.js"
+    $.getScript(url);
+  </script> -->
   </body>
 </html>
