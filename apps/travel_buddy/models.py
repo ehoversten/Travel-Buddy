@@ -44,7 +44,8 @@ class UserManager(models.Manager):
         else:
             user = User.objects.filter(username=form['username'])
             if not bcrypt.checkpw(form['passwd'].encode(), user[0].passwd.encode()):
-                 errors.append('Password does not match record.')
+                # print(bcrypt.checkpw(form['passwd'].encode(), user[0].passwd.encode()))
+                errors.append('Password does not match record.')
 
         if not errors:
             return (True, user[0])

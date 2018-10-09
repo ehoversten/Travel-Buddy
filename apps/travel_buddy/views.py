@@ -129,7 +129,6 @@ def leave_trip(request, trip_id):
     user_to_join.have_joined.remove(this_trip)
     return redirect('/travels')
 
-def trip_delete(req, trip_id):
-    this_trip = Destination.objects.get(id=trip_id)
-    this_trip.remove()
+def delete_trip(req, trip_id):
+    this_trip = Destination.objects.get(id=trip_id).delete()
     return redirect('/travels')
