@@ -2,18 +2,20 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Travel Buddy</title>
     {% load static %}
-    <!-- LOAD JQuery  -->
+    <!--JQuery  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- LOAD BOOTSTRAP  -->
+    <!-- BOOTSTRAP  -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-    <!-- LOAD CSS STYLESHEET -->
+    <!--CSS STYLESHEET -->
+    <link rel="shortcut icon" href="{% static 'travel_buddy/favicon/favicon.png' %}"/>
     <link rel="stylesheet" href="{% static 'travel_buddy/css/travel_styles.css' %}">
+    <title>Travel Buddy</title>
   </head>
   <body>
     <div class="wrapper">
       <div class="header">
+        <!-- NAV Bar -->
         <div class="navbar">
           <a class="navbar-brand" href="/travels">
             <img src="{% static 'travel_buddy/img/airplane_logo.png'%}" alt="airplane logo">
@@ -22,7 +24,7 @@
           <a href="travels/logout"><button class="btn btn-danger" type="button" name="logout_btn">Logout</button></a>
         </div>
       </div>
-
+      <!-- Main Content -->
       <div class="container">
 
         <div class="user_trips">
@@ -41,7 +43,11 @@
               <tbody>
               {% for location in my_trips %}
                 <tr>
-                  <th scope="row"># | <a href="/travels/leave_trip/{{ location.id }}">Remove</a></th>
+                  <th scope="row"><a href="/travels/leave_trip/{{ location.id }}">Remove</a>
+                    {%if location.planner.id == request.session.id%}
+                    | <a class="#" href="/travels/remove_trip/{{location.id}}">Delete</a>       
+                    {% endif %}
+                  </th>
                   <td><a href="/travels/destination/{{ location.id }}">{{ location.location }}</a></td>
                   <td>{{ location.start_date }}</td>
                   <td>{{ location.end_date }}</td>
@@ -60,8 +66,8 @@
             <button id="ajax_btn" class="btn btn-success" type="button" name="button">AJAX Testing</button>
           </div>
 
+          <!-- AJAX Form -->
           <div class="form_container">
-            <h1>Demo 3 - Ajax Form II</h1>
             <h2>Create a new trip</h2>
             <form id="add_trip_ajax_form" class="form-group" action="/process_add" method="post">
               {% csrf_token %}
@@ -80,10 +86,7 @@
                 Placeholder for the Ajax Form part II
             </div>
           </div>
-
-
         </div>
-
 
 
         <div class="others_trips">
@@ -119,47 +122,8 @@
         </div>
       </div>
     </div>
-    <!-- ADD JQuery/JavaScript code -->
-    <script type="text/javascript">
-      $(document).ready(function() {
-
-        $('.form_container').hide();
-
-        $('#add_trip_btn').click(function() {
-          console.log("add trip form toggled");
-          $('.form_container').slideToggle("blind");
-        });
-
-
-        $('#ajax_btn').click(function() {
-          console.log("ajax button clicked");
-          $.ajax({
-            url: 'travels/ajax_testing',
-            success: function(serverResponse) {
-              console.log("success, Server Response: ", serverResponse);
-            }
-          })
-        });
-
-        $('#add_trip_ajax_form').submit(function(e) {
-          e.preventDefault();
-          console.log("ajax form submission");
-          $.ajax({
-            url: $(this).attr('action'),
-            method: 'post',
-            data: $(this).serialize(),
-            success: function(serverResponse) {
-              console.log("success, Server Response: ", serverResponse);
-              $('#placeholder3').html(serverResponse)
-            }
-          })
-        })
-
-
-
-      });
-    </script>
-
+    <!-- Scripts -->
+    <script src="{% static 'travel_buddy/js/Ajaxform.js' %}"></script>
 
   </body>
 </html>
