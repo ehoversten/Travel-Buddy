@@ -25,6 +25,11 @@
 
       <div class="container">
 
+        <div class="fetch">
+          <div id='placeholder1' style='margin-top:35px; border:1px solid silver; width:750px; padding:10px;'>
+          </div>
+        </div>
+
         <div class="user_trips">
           <h4 class="text-center">Your Scheduled Trips</h4>
           <div class="table_container">
@@ -65,7 +70,8 @@
           <div class="form_container">
             <h1>Demo 3 - Ajax Form II</h1>
             <h2>Create a new trip</h2>
-            <form id="add_trip_ajax_form" class="form-group" action="/process_add" method="post">
+            <!-- <form action='/user_login/create' method='post' class='ajax_form' id='create_user_ajax_form'> -->
+            <form id="create_user_ajax_form" class="form-group" action="/create" method="post">
               {% csrf_token %}
               Destination:<input type="text" name="location" value="">
 
@@ -78,9 +84,6 @@
               <input class="btn btn-success" type="submit" name="submit_dest" value="Add Destination">
             </form>
 
-            <div id='placeholder3' style='margin-top:35px; border:1px solid silver; width:750px; padding:10px;'>
-                Placeholder for the Ajax Form part II
-            </div>
           </div>
 
 
@@ -121,31 +124,42 @@
     <script type="text/javascript">
       $(document).ready(function() {
 
+        // $.ajax({
+        //   method: 'GET',
+        //   url: 'all_html',
+        //   data: $(this).serialize(),
+        //   success: function(my_trips) {
+        //     console.log('Success: ', data);
+        //     $('#placeholder1').html(data)
+        //   }
+        // });
+
         $('#ajax_load').click(function() {
           console.log("Loading Data ...");
 
           $.ajax({
             method: 'GET',
-            url: 'travels/ajax_testing',
+            url: 'all_html',
             data: $(this).serialize(),
             success: function(data) {
               console.log('Success: ', data);
+              $('#placeholder1').html(data)
             }
           });
         });
 
-        $('.form_container').hide();
+        // $('.form_container').hide();
 
-        $('#add_trip_btn').click(function() {
-          console.log("add trip form toggled");
-          $('.form_container').slideToggle("blind");
-        });
+        // $('#add_trip_btn').click(function() {
+        //   console.log("add trip form toggled");
+        //   $('.form_container').slideToggle("blind");
+        // });
 
 
         $('#ajax_btn').click(function() {
           console.log("ajax button clicked");
           $.ajax({
-            url: 'travels/ajax_testing',
+            url: 'travels/ajax',
             success: function(serverResponse) {
               console.log("success, Server Response: ", serverResponse);
             }
@@ -154,7 +168,7 @@
 
 
 
-        $('#add_trip_ajax_form').submit(function(e) {
+        $('#create_user_ajax_form').submit(function(e) {
           e.preventDefault();
           console.log("ajax form submission");
           $.ajax({
@@ -164,10 +178,33 @@
             data: $(this).serialize(),
             success: function(serverResponse) {
               console.log("success, Server Response: ", serverResponse);
-              $('#placeholder3').html(serverResponse)
+              $('#placeholder1').html(serverResponse)
             }
           })
         })
+
+
+
+        $('#button_json').click(function(){
+          $.ajax({
+                url: 'all.json', /* Where should this go? */
+                success: function(serverResponse) {  /* What code should we run when the server responds? */
+                  console.log("Received this from server:", serverResponse)
+                  console.log("Now, I can use the serverResponse to manipulate the DOM")
+                  $('#placeholder1').html(JSON.stringify(serverResponse))
+                }
+            });
+        });
+
+        $('#button_html').click(function(){
+          $.ajax({
+                  url: 'all_html', /* Where should this go? */
+                  success: function(serverResponse) {  /* What code should we run when the server responds? */
+                    console.log("Received this from server:", serverResponse)
+                    $('#placeholder1').html(serverResponse)
+                  }
+              });
+          });
 
       });
     </script>
