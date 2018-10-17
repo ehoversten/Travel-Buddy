@@ -25,6 +25,7 @@ urlpatterns = [
     # AJAX ROUTES
     url(r'^travels/ajax$', views.ajax_testing),
     url(r'^travels/all_html$', views.all_html),
+    url(r'^travels/all.json$', views.all_json),
     url(r'^all.json$', views.all_json),
     url(r'^all.html$', views.all_html),
     url(r'^create$', views.create)

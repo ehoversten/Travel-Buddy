@@ -85,7 +85,7 @@ def process_add(request):
         return redirect('/travels')
     else:
         for error in results[1]:
-            messages.add_message(request, messages.ERROR,error, extra_tags='register')
+            messages.add_message(request, messages.ERROR, error, extra_tags='register')
         # return redirect('/travels/add')
         return redirect('/')
 
@@ -123,16 +123,17 @@ def ajax_testing(request):
     my_trips_json = serializers.serialize("json", my_trips)
 
     all_trips = Destination.objects.exclude(users_on_trip=this_user_id)
-
+    all_trips_json = serializers.serialize("json", all_trips)
 
     print(my_trips_json)
+    print(all_trips_json)
 
     context = {
-        'all_trips'    : all_trips,
-        'my_trips_json': my_trips_json,
+        'all_trips_json': all_trips_json,
+        'my_trips_json' : my_trips_json,
     }
     # renders JSON response OBJECT
-    # return HttpResponse(my_trips_json, content_type='application/json')
+    # return HttpResponse(all_trips_json, content_type='application/json')
 
     # renders HTML page with context
     return render(request, 'travel_buddy/ajax_dashboard.html', context)
@@ -162,30 +163,26 @@ def all_json(request):
     this_user = User.objects.get(id=int(this_user_id))
 
     my_trips = this_user.have_joined.all()
-    # my_trips_json = serializers.serialize("json", my_trips)
     return HttpResponse(serializers.serialize('json', my_trips), content_type='application/json')
 
 def create(request):
+    print("Creating Trip...")
+    print("*"*25)
 
-    # --- Pass in the request.POST **and** SESSION
-    # results = Destination.objects.dest_validator(request.POST, int(request.session['id']))
-    # print("*"*25)
-    # print('RESULTS: ', results)
-    # print("*"*25)
-    # if results[0]:
-    #     return render(request, 'travel_buddy/all.html', results)
-    # else:
-    #     for error in results[1]:
-    #         messages.add_message(request, messages.ERROR, error)
+    print('Request: ', request)
+    print("*"*25)
+    print('Request POST: ', request.POST);
+    print("*"*25)
+    this_user_id = request.session['id']
+    this_user = User.objects.get(id=this_user_id)
+    print('User: ', this_user)
+    print("*"*25)
+    location = Destination.objects.create(location=request.POST['location'], description=request.POST['description'], start_date=request.POST['start_date'], end_date=request.POST['end_date'], planner=this_user)
+    print('Location: ', location)
+    my_trips = this_user.have_joined.add(location)
 
-    # return redirect('/travels')
+    context = {
+        'my_trips' : my_trips
+    }
 
-    this_user = User.objects.get(id=user_id)
-    location = Destination.objects.create(location=form['location'], description=form['description'], planner=this_user, start_date=form['start_date'], end_date=form['end_date'])
-
-    # before returning the location we add it to the logged-in users list.
-    this_user.have_joined.add(location)
-
-    # Destination.objects.create(location=request.POST['location'], description=request.POST['description'], start_date=request.POST['start_date'], end_date=request.POST['end_date'])
-
-    return render(request, 'travel_buddy/all.html', results)
+    return render(request, 'travel_buddy/all.html', context)
