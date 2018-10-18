@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
   <head>
     <meta charset="utf-8">
     <title>Travel Buddy</title>
@@ -7,10 +8,12 @@
     <!-- LOAD JQuery  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- LOAD BOOTSTRAP  -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+      integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <!-- LOAD CSS STYLESHEET -->
     <link rel="stylesheet" href="{% static 'travel_buddy/css/travel_styles.css' %}">
   </head>
+
   <body>
     <div class="wrapper">
       <div class="header">
@@ -55,60 +58,61 @@
               {% endfor %}
               </tbody>
             </table> -->
-          </div>
+        </div>
 
-          <div class="test_submit">
-            <div class="row">
-              <form id="test_submit" class="form-control" action="/test_submit" method="post">
-                Test String:<input type="text" name="test_string" value="">
-                <input class="btn btn-primary" type="submit" name="" value="Submit">
-              </form>
-            </div>
-
-          </div>
-
+        <div class="test_submit">
           <div class="row">
-            <!-- <a href="/travels/add"><button class="add_trip_btn btn btn-warning" type="button" name="button">Add Travel Plan</button></a> -->
-            <button id="button_json" class="btn btn-info" type="button" name="button">Load JSON</button>
-
-            <button id='add_trip_btn' class="btn btn-warning" type="button" name="button">Add Travel Plan</button>
-
-            <button id="ajax_btn" class="btn btn-success" type="button" name="button">AJAX Testing</button>
-
-            <button id="ajax_load" class="btn btn-success" type="button" name="button">Load Data</button>
-
-            <!-- <button id="new_content" class="btn btn-primary" type="button" name="button">New Content</button> -->
-          </div>
-
-          <div id="add_content">
-
-          </div>
-
-          <div class="form_container">
-            <h1>Demo 3 - Ajax Form II</h1>
-            <h2>Create a new trip</h2>
-            <!-- <form action='/user_login/create' method='post' class='ajax_form' id='create_user_ajax_form'> -->
-            <form id="create_user_ajax_form" class="form-group" action="/create" method="post">
-              {% csrf_token %}
-              Destination:<input id="ajax_location" type="text" name="location" value="">
-
-              Description:<input id="ajax_description" type="text" name="description" value="">
-
-              Travel Date From:<input id="start_datepicker" type="date" name="start_date" min="2018-05-21" value="" required>
-
-              Travel Date To:<input id="end_datepicker" type="date" name="end_date" min="2018-05-21" value="" required>
-
-              <input class="btn btn-success" type="submit" name="submit_dest" value="Add Destination">
+            <form id="test_submit" class="form-control" action="/test_submit" method="post">
+              Test String:<input type="text" name="test_string" value="">
+              <input class="btn btn-primary" type="submit" name="" value="Submit">
             </form>
-
           </div>
 
+        </div>
+
+        <div class="row">
+          <!-- <a href="/travels/add"><button class="add_trip_btn btn btn-warning" type="button" name="button">Add Travel Plan</button></a> -->
+          <button id="button_json" class="btn btn-info" type="button" name="button">Load JSON</button>
+
+          <button id='add_trip_btn' class="btn btn-warning" type="button" name="button">Add Travel Plan</button>
+
+          <button id="ajax_btn" class="btn btn-success" type="button" name="button">AJAX Testing</button>
+
+          <button id="ajax_load" class="btn btn-success" type="button" name="button">Load Data</button>
+
+          <!-- <button id="new_content" class="btn btn-primary" type="button" name="button">New Content</button> -->
+        </div>
+
+        <div id="add_content">
+
+        </div>
+
+        <div class="form_container">
+          <h1>Demo 3 - Ajax Form II</h1>
+          <h2>Create a new trip</h2>
+          <!-- <form action='/user_login/create' method='post' class='ajax_form' id='create_user_ajax_form'> -->
+          <form id="create_user_ajax_form" class="form-group" action="/create" method="post">
+            {% csrf_token %}
+            Destination:<input id="ajax_location" type="text" name="location" value="">
+
+            Description:<input id="ajax_description" type="text" name="description" value="">
+
+            Travel Date From:<input id="start_datepicker" type="date" name="start_date" min="2018-05-21" value=""
+              required>
+
+            Travel Date To:<input id="end_datepicker" type="date" name="end_date" min="2018-05-21" value="" required>
+
+            <input class="btn btn-success" type="submit" name="submit_dest" value="Add Destination">
+          </form>
 
         </div>
 
 
+      </div>
 
-        <!-- <div class="others_trips">
+
+
+      <!-- <div class="others_trips">
           <h4 class="text-center pad">Other User's Travel Plans</h4>
           <div class="table_container">
             <table class="table table-dark text-center">
@@ -135,35 +139,34 @@
             </table>
           </div>
         </div> -->
-      </div>
+    </div>
     </div>
     <!-- ADD JQuery/JavaScript code -->
     <script type="text/javascript">
-
       function add_test_submit(element) {
-        $('#add_content').append('<li>'+element+'</li>');
+        $('#add_content').append('<li>' + element + '</li>');
       }
 
-      $(document).ready(function() {
+      $(document).ready(function () {
         // $('#create_user_ajax_form').on('submit')
-        $.ajax({
-          method: 'GET',
-          url: 'all_html',
-          // data: $(this).serialize(),
-          success: function(data) {
-            console.log('Success: ', data);
-            $('#placeholder1').html(data)
-          }
-        });
+        // $.ajax({
+        //   method: 'GET',
+        //   url: 'all_html',
+        //   // data: $(this).serialize(),
+        //   success: function (data) {
+        //     console.log('Success: ', data);
+        //     $('#placeholder1').html(data)
+        //   }
+        // });
 
-        $('#ajax_load').click(function() {
+        $('#ajax_load').click(function () {
           console.log("Loading Data ...");
 
           $.ajax({
             method: 'GET',
             url: 'all_html',
             data: $(this).serialize(),
-            success: function(data) {
+            success: function (data) {
               console.log('Success: ', data);
               $('#placeholder1').html(data)
             }
@@ -195,7 +198,7 @@
         //   $('#new_content').appened('<li>'+$(this)'</li>');
         // }
 
-        $('#test_submit').submit(function(event) {
+        $('#test_submit').submit(function (event) {
           event.preventDefault();
           console.log("Ajax Test Form Submission");
           console.log($(this).serialize());
@@ -204,7 +207,7 @@
         });
 
 
-        $('#create_user_ajax_form').submit(function(e) {
+        $('#create_user_ajax_form').submit(function (e) {
           e.preventDefault();
           console.log("ajax form submission");
           $.ajax({
@@ -212,7 +215,7 @@
             method: 'post',
             // data: { the_post : $('#post-text').val() }, // data sent with the post request
             data: $(this).serialize(),
-            success: function(serverResponse) {
+            success: function (serverResponse) {
               // console.log("Success, Post Data:", data);
               console.log("success, Server Response: ", serverResponse);
               $('#ajax_location').val();
@@ -229,21 +232,30 @@
         //   $('.new_content').append('<h2> I am new content </h2>');
         // });
 
-        $('#button_json').click(function(){
+        $('#button_json').click(function () {
           $.ajax({
-                url: 'all.json', /* Where should this go? */
-                success: function(serverResponse) {  /* What code should we run when the server responds? */
-                  console.log("Received this from server:", serverResponse)
-                  console.log("Now, I can use the serverResponse to manipulate the DOM")
-                  // stringy = JSON.stringify(serverResponse);
-                  // parsed = JSON.parse(stringy);
-                  // $('#placeholder1').html(JSON.parse(stringy));
+            url: 'all.json',
+            /* Where should this go? */
+            success: function (serverResponse) { /* What code should we run when the server responds? */
+              let data = serverResponse
+              // console.log(data)
 
-                  $('#placeholder1').html(JSON.stringify(serverResponse));
+              // function* generate(data) {
+              //   yield data;
+              //   //console.log(message)
+              // }
 
-                }
-            });
-        });
+              for (let key of data) {
+                // console.log(key);
+                console.log(key.fields.location);
+                // console.log(key.description);
+                $('#placeholder1').append(`<p>${key.fields.location}</p>`);
+              }
+            }
+          })
+      })
+
+  
         //
         // $('#button_html').click(function(){
         //   $.ajax({
@@ -259,4 +271,5 @@
     </script>
 
   </body>
+
 </html>
