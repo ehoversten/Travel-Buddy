@@ -166,13 +166,7 @@ def all_json(request):
     return HttpResponse(serializers.serialize('json', my_trips), content_type='application/json')
 
 def create(request):
-    print("Creating Trip...")
-    print("*"*25)
-
-    print('Request: ', request)
-    print("*"*25)
-    print('Request POST: ', request.POST);
-    print("*"*25)
+    
     this_user_id = request.session['id']
     this_user = User.objects.get(id=this_user_id)
     print('User: ', this_user)

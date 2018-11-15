@@ -36,9 +36,10 @@
             {% csrf_token %}
             Destination:<input type="text" name="location" value="">
             Description:<input type="text" name="description" value="">
+            <br>
 
             Travel Date From: <input id="start_datepicker" type="date" name="start_date" min="2018-05-21" value="" required>
-            
+            <br>
             Travel Date To: <input id="end_datepicker" type="date" name="end_date" min="2018-05-21" value="" required>
             <input class="btn btn-success" type="submit" name="submit_dest" value="Add Destination">
           </form>
