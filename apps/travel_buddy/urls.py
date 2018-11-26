@@ -1,10 +1,14 @@
 from django.conf.urls import url
 from . import views
+from .views import Landing
+#importing from views
 
 urlpatterns = [
+     url(r'^travels$', Landing.as_view(), name='landing'),
+
     url(r'^$', views.trip_log_reg),
     url(r'^main$', views.trip_log_reg),
-    url(r'^travels$', views.home),
+    # url(r'^travels$', views.home),
         # Login and add process
     url(r'^travels/process_reg$', views.process_reg),
     url(r'^travels/process_login$', views.process_login),
@@ -22,7 +26,7 @@ urlpatterns = [
     url(r'^travels/join_trip/(?P<trip_id>\d+)$', views.join_trip),
     url(r'^travels/remove_trip/(?P<trip_id>\d+)$', views.delete_trip),
 
-    # AJAX ROUTES
+    # AJAX ROUTES --> Testing-Phase
     url(r'^travels/ajax$', views.ajax_testing),
     url(r'^travels/all_html$', views.all_html),
     url(r'^travels/all.json$', views.all_json),
