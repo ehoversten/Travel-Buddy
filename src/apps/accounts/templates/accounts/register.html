@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Register</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group row">
+        {{ field.label_tag }}
+        {{ field.errors }}
+        {{ field }}
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="form-group row">
+        <button class="btn btn-info" type="submit">Submit</button>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,3 @@
+The following changes were implemented:
+    - Folder Restructuring
+    - Updated settings media file directory
