@@ -1,27 +1,20 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    {% load static %}
-    <!-- LOAD JQuery  -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-    <!-- LOAD BOOTSTRAP  -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-    <!--CSS STYLESHEET -->
-    <link rel="shortcut icon" href="{% static 'travel_buddy/favicon/favicon.png' %}"/>
-    <link rel="stylesheet" href="{% static 'travel_buddy/css/travel_styles.css' %}">
-    <title>Travel Buddy</title>
-  </head>
-  <body>
+{% extends 'base.html'%}
+{% load static %}
+
+{% url 'home' as home_url %}
+{% url 'logout' as logout_url %}
+{% block title %} | Dashboard {% endblock %}
+
+{% block content %}
     <div class="wrapper">
       <div class="header">
         <!-- NAV Bar -->
         <div class="navbar">
-          <a class="navbar-brand" href="/travels">
+          <a class="navbar-brand" href="">
             <img src="{% static 'travel_buddy/img/airplane_logo.png'%}" alt="airplane logo">
           </a>
-          <h3>Hello, {{ request.session.name }}</h3>
-          <a href="travels/logout"><button class="btn btn-danger" type="button" name="logout_btn">Logout</button></a>
+          <h3>Hello, {{ user.username }}</h3>
+          <a href="{{ logout_url }}"><button class="btn btn-danger" type="button" name="logout_btn">Logout</button></a>
         </div>
       </div>
       <!-- Main Content -->
@@ -97,11 +90,5 @@
         </div>
       </div>
     </div>
-    <!-- Scripts -->
-    <script src="{% static 'travel_buddy/js/Ajaxform.js' %}"></script>
- <!--  <script>
-    let url = "static/travel_buddy/js/AjaxForm.js"
-    $.getScript(url);
-  </script> -->
-  </body>
-</html>
+
+{% endblock %}
