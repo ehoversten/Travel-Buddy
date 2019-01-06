@@ -3,13 +3,19 @@ from django.shortcuts import render, redirect
 from django.views import View
 from .forms import LoginForm, RegisterForm
 
+User = get_user_model()
 
 class LoginFormView(View):
     form_class = LoginForm
     initial = {'key': 'value'}
     template_name = 'accounts/login.html'
-
     def get(self, request, *args, **kwargs):
+        # print(User)
+        if request.user is not None:
+            if request.user.is_authenticated:
+                return redirect('travel:home')
+        else:
+            return redirect('account:login')
         form = self.form_class(initial=self.initial)
         return render(request, self.template_name, {'form': form})
 

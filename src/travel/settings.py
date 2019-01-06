@@ -125,9 +125,9 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,
-                 './assets/static',)
+                 './assets/local_static',)
 ]
-print(STATICFILES_DIRS)
+# print(STATICFILES_DIRS)
 
 # Media Files, if we use them.
 MEDIA_URL = '/media/'
