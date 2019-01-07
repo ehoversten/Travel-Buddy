@@ -7,8 +7,8 @@ from django.contrib.auth.views import LogoutView
 urlpatterns = [
     url(r'^', include(('apps.accounts.urls', 'account'), namespace='account')),
     url(r'^travel/', include(('apps.travel_buddy.urls', 'travel'), namespace='travel')),
-    url(r'^admin/', admin.site.urls),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
+    url(r'^admin/', admin.site.urls),
 ]
 
 

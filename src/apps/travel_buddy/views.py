@@ -4,9 +4,10 @@ from django.core import serializers
 import json
 from .models import Destination, User
 from django.contrib.auth import (authenticate, get_user_model)
+from django.contrib.auth.decorators import login_required
 
 User = get_user_model()
-
+@login_required(login_url='account:login')
 def home(request):
     
     # user_id = request.user.id

@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime
-import bcrypt
+# import bcrypt
 from django.contrib.auth import get_user_model
 User = get_user_model()
 now = str(datetime.now())
