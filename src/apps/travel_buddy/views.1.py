@@ -3,7 +3,26 @@ from django.shortcuts import HttpResponse, redirect, render
 from django.core import serializers
 import json
 from .models import Destination, User
+<<<<<<< HEAD:src/apps/travel_buddy/views.1.py
 from django.contrib.auth import (authenticate, get_user_model)
+=======
+from django.views.generic import View
+
+
+# Class-based views
+class Landing(View):
+    def get(self, request):
+        this_user_id = request.session['id']
+        this_user = User.objects.get(id=int(this_user_id))
+        my_trips = this_user.have_joined.all()
+        all_trips = Destination.objects.exclude(users_on_trip=this_user_id)
+
+        context = {
+            'all_trips': all_trips,
+            'my_trips': my_trips,
+        }
+        return render(request, 'travel_buddy/trip_dashboard.html', context)
+>>>>>>> master:apps/travel_buddy/views.py
 
 
 def trip_log_reg(request):
@@ -173,6 +192,13 @@ def all_json(request):
 
 def create(request):
 
+<<<<<<< HEAD:src/apps/travel_buddy/views.1.py
+=======
+    print('Request: ', request)
+    print("*"*25)
+    print('Request POST: ', request.POST)
+    print("*"*25)
+>>>>>>> master:apps/travel_buddy/views.py
     this_user_id = request.session['id']
     this_user = User.objects.get(id=this_user_id)
     print('User: ', this_user)
