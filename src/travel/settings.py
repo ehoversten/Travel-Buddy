@@ -37,10 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # installed application
+    #added travel_buddy
     'apps.travel_buddy',
-    'apps.accounts',
 ]
 
 MIDDLEWARE = [
