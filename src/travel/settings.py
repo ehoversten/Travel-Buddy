@@ -37,15 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD:src/travel/settings.py
 
     # installed application
     'apps.travel_buddy',
     'apps.accounts',
-=======
-    #added travel_buddy
-    'apps.travel_buddy',
->>>>>>> master:travel/settings.py
 ]
 
 MIDDLEWARE = [
