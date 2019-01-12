@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-
+{% block title %} | Login {% endblock %}
 {% block content %}
-<h1>Login</h1>
-<form action="{% url 'account:login'  %}" method="POST">
+<form class="form-group col-md-7 col-lg-7" action="{% url 'account:login' %}" method="POST">
+    <h1>Login</h1>
     {% csrf_token %}
     {% for field in form %}
     <div class="form-group row">

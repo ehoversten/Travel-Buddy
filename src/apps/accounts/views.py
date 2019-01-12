@@ -39,7 +39,7 @@ def register_view(req):
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
         newUser = User.objects.create_user(username, email, password)
-    return render(req, "accounts/login.html", context)
+    return render(req, "accounts/register.html", context)
 
 
 
