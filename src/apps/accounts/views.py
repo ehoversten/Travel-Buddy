@@ -1,5 +1,5 @@
 from django.contrib.auth import (authenticate, login, get_user_model,logout)
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.views import View
 from .forms import LoginForm, RegisterForm
 
@@ -39,6 +39,12 @@ def register_view(req):
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
         newUser = User.objects.create_user(username, email, password)
+
+    if req.is_ajax():
+        if form.errors:
+            errors = form.errors.as_json()
+            return HttpResponse(errors, status=400, content_type="application/json")
+        
     return render(req, "accounts/register.html", context)
 
 

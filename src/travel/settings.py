@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # installed application
+    # 'apps.destinations',
     'apps.travel_buddy',
     'apps.accounts',
 ]
@@ -127,6 +128,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'./assets/local_static',)
 ]
 # print(STATICFILES_DIRS)
+
+# This is what actually serves the files
+STATIC_ROOT = os.path.join(BASE_DIR, "./assets", 'static_cdn')
 
 # Media Files, if we use them.
 MEDIA_URL = '/media/'

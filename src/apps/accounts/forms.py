@@ -31,11 +31,14 @@ class RegisterForm(forms.Form):
         cleaned_data = super().clean()
         password2 = cleaned_data.get('password2')
         password = cleaned_data.get('password')
-        username = cleaned_data.get('username')
+        email = cleaned_data.get('email')
         # print(password, password2)
         if password and password2:
             if password2 != password:
                 msg = 'Passwords must match'
                 self.add_error('password', msg)
+        if User.objects.filter(email=email).exists():
+                userError = 'Email Already Taken'
+                self.add_error('password', userError)
 
         return cleaned_data
