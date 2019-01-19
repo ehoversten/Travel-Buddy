@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # installed application
-    # 'apps.destinations',
+    'apps.destinations',
     'apps.travel_buddy',
     'apps.accounts',
 ]

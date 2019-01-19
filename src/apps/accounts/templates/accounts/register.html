@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form action="" class="form-group col-md-7 col-lg-7" action="{% url 'account:register' %}" method="POST">
+<form class="form-group col-md-7 col-lg-7 register-form" method="POST" action="{% url 'account:register' %}" data-endpoint='{% url "account:register" %}'>
     <h1>Register</h1>
     {% csrf_token %}
     {% for field in form %}
