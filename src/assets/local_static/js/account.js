@@ -4,6 +4,7 @@ $(document).ready(function () {
     let registerForm = $(".register-form")
     let registerFormMethod = registerForm.attr("method")
     let registerFormEndpoint = registerForm.attr('data-endpoint')
+    let navigate = registerForm.attr('href')
 
 
     function displaySubmitting(submitBtn, defaultText, doSubmit) {
@@ -32,15 +33,10 @@ $(document).ready(function () {
             url: registerFormEndpoint,
             data: registerFormData,
             success: function (data) {
-                thisForm[0].reset()
-                $.alert({
-                    title: "Success",
-                    content: data.message,
-                    theme: "modern"
-                })
                 setTimeout(function () {
                     displaySubmitting(registerFormSubmitBtn, registerFormSubmitBtnTxt, false)
                 }, 500)
+                window.location.href = navigate;
 
             },
             error: function (error) {
