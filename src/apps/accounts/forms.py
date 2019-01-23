@@ -1,6 +1,7 @@
 from django import forms
 from .emailTypes import approvedEmails
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import check_password
 User = get_user_model()
 
 class LoginForm(forms.Form):
@@ -8,6 +9,25 @@ class LoginForm(forms.Form):
         attrs={"class": "form-control", 'id': 'form_username', "placeholder": "Your Username", }))
     password = forms.CharField(label="Password", widget=forms.PasswordInput(
         attrs={"class": "form-control", 'id': 'form_password'}))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            user = None
+        print(user)
+        if user is None:
+                msg = 'Please register first'
+                self.add_error('username', msg)
+        else:
+            print(not user.check_password(password))
+            if not user.check_password(password):
+                userError = 'Invalid Credentials'
+                self.add_error('password', userError)
+        return cleaned_data
 
 
 class RegisterForm(forms.Form):
