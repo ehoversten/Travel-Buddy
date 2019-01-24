@@ -5,6 +5,7 @@ $(document).ready(function () {
     let registerFormMethod = registerForm.attr("method")
     let registerFormEndpoint = registerForm.attr('data-endpoint')
     let navigate = registerForm.attr('href')
+    console.log(navigate)
     
 
 
@@ -39,7 +40,7 @@ $(document).ready(function () {
                 setTimeout(function () {
                     displaySubmitting(registerFormSubmitBtn, registerFormSubmitBtnTxt, false)
                 }, 500)
-                // window.location.href = navigate;
+                window.location.href = navigate;
 
             },
             error: function (error) {

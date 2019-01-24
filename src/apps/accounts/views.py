@@ -13,6 +13,7 @@ class LoginFormView(View):
     template_name = 'accounts/login.html'
     def get(self, request, *args, **kwargs):
         if request.user is not None:
+            print('from get ', request.user.is_authenticated)
             if request.user.is_authenticated:
                 return redirect('travel:home')
         else:
@@ -26,20 +27,18 @@ class LoginFormView(View):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=password)
-        if user is not None:
-            if request.is_ajax():
-                print('from login', user)
-                user = authenticate(request, username=username, password=password)
-                print(user.is_authenticated)
-                print(user.is_active)
-                if not form.errors:
-                    response_data = {}
-                    response_data['msg'] = 'Logged in! good to go!'
-                    print(response_data)
-                    return HttpResponse(json.dumps(response_data), content_type="application/json", status=200)
-                if form.errors:
-                    errors = form.errors.as_json()
-                    return HttpResponse(errors, status=403, content_type="application/json")
+
+        if request.is_ajax():
+
+            if not form.errors:
+                login(request, user)
+                response_data = {}
+                response_data['msg'] = 'Logged in! good to go!'
+                print(response_data)
+                return HttpResponse(json.dumps(response_data), content_type="application/json", status=200)
+            if form.errors:
+                errors = form.errors.as_json()
+                return HttpResponse(errors, status=403, content_type="application/json")
 
         if user is not None:
             login(request, user)
@@ -67,7 +66,7 @@ def register_view(req):
             if not form.errors:
                 response_data = {}
                 response_data['msg'] = 'Good to go!'
-                # print(response_data)
+                print(response_data)
                 return HttpResponse(json.dumps(response_data),content_type="application/json", status=200)
             if form.errors:
                 errors = form.errors.as_json()
