@@ -5,6 +5,7 @@ $(document).ready(function () {
     let registerFormMethod = registerForm.attr("method")
     let registerFormEndpoint = registerForm.attr('data-endpoint')
     let navigate = registerForm.attr('href')
+    
 
 
     function displaySubmitting(submitBtn, defaultText, doSubmit) {
@@ -38,7 +39,7 @@ $(document).ready(function () {
                 setTimeout(function () {
                     displaySubmitting(registerFormSubmitBtn, registerFormSubmitBtnTxt, false)
                 }, 500)
-                window.location.href = navigate;
+                // window.location.href = navigate;
 
             },
             error: function (error) {
@@ -59,7 +60,8 @@ $(document).ready(function () {
     let loginForm = $(".login-form")
     let loginFormMethod = loginForm.attr("method")
     let loginFormEndpoint = loginForm.attr('data-endpoint')
-    // let navigate = loginForm.attr('href')
+    let _navigate = loginForm.attr('href')
+    console.log(_navigate)
 
 
     function displaySubmitting(submitBtn, defaultText, doSubmit) {
@@ -93,7 +95,7 @@ $(document).ready(function () {
                 setTimeout(function () {
                     displaySubmitting(loginFormSubmitBtn, loginFormSubmitBtnTxt, false)
                 }, 500)
-                // window.location.href = navigate;
+                window.location.href = _navigate;
                 console.log("It works! we guchi")
 
             },

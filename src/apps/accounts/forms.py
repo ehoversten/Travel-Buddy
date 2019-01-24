@@ -18,12 +18,12 @@ class LoginForm(forms.Form):
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             user = None
-        print(user)
+        # print(user)
         if user is None:
                 msg = 'Please register first'
                 self.add_error('username', msg)
         else:
-            print(not user.check_password(password))
+            # print(not user.check_password(password))
             if not user.check_password(password):
                 userError = 'Invalid Credentials'
                 self.add_error('password', userError)

@@ -6,6 +6,7 @@ from django.contrib.auth import (authenticate, get_user_model)
 from django.contrib.auth.decorators import login_required
 
 User = get_user_model()
+# print(User.is_authenticated)
 @login_required(login_url='account:login')
 def home(request):
     
