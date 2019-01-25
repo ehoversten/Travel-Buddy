@@ -41,10 +41,10 @@
                 </tr>
               </thead>
               <tbody>
-              {% for location in my_trips %}
+              {% for location in user_trips %}
                 <tr>
-                  <th scope="row"><a href="/travels/leave_trip/{{ location.id }}">Remove</a>
-                    {%if location.planner.id == request.session.id%}
+                  <th scope="row"><a href="{{ location.get_absolute_url }}">Remove</a>
+                    {% if location.planner.id == user.id %}
                     | <a class="#" href="/travels/remove_trip/{{location.id}}">Delete</a>
                     {% endif %}
                   </th>

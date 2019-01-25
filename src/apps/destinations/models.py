@@ -1,15 +1,36 @@
-from django.db import models
 from datetime import datetime
-from .signal import destination_pre_save_receiver
-from django.db.models.signals import pre_save, post_save
-# import bcrypt
+
 from django.contrib.auth import get_user_model
+from django.db import models
+from django.db.models.signals import post_save, pre_save
+from django.urls import reverse
+
+from .signals import destination_pre_save_receiver
+from .custom_queries import DestinationQuerySet
 User = get_user_model()
 now = str(datetime.now())
 
-class DestinationManager(models.Manager):
+# implement adding images later
 
-    def dest_validator(self, form, user_id):
+class DestinationManager(models.Manager):
+    def get_queryset(self):
+        return DestinationQuerySet(self.model, using=self._db)
+
+    def get_by_id(self, id):
+        qs = self.get_queryset().filter(id=id)
+        if qs.count() == 1:
+            return qs.first()
+        return None
+
+    def completed(self):  # Product.objects.featured()
+        return self.get_queryset().completed()
+    
+
+    # def search(self, query):
+    #     return self.get_queryset().active().search(query)
+
+    def new(self, form, user=None):
+        new_obj = False
         errors = []
 
         if not form['location']:
@@ -33,7 +54,7 @@ class DestinationManager(models.Manager):
 
 
         if not errors:
-            this_user = User.objects.get(id=user_id)
+            current_user = User.objects.get(id=user_id)
             location = Destination.objects.create(location=form['location'], description=form['description'], planner=this_user, start_date=form['start_date'], end_date=form['end_date'])
 
             # before returning the location we add it to the logged-in users list.
@@ -45,15 +66,19 @@ class DestinationManager(models.Manager):
 
 
 class Destination(models.Model):
-    completed       = models.BooleanField(default=False)
+    slug            = models.SlugField(blank=True, unique=True)
     location        = models.CharField(max_length=255)
     description     = models.CharField(max_length=255)
     start_date      = models.DateField(auto_now=False)
     end_date        = models.DateField(auto_now=False)
     timestamp       = models.DateTimeField(auto_now_add=True)
+    completed = models.BooleanField(default=False)
 
     planner         = models.ForeignKey(User, related_name="user_planner", on_delete=models.CASCADE)
-    users_on_trip   = models.ManyToManyField(User, related_name="others_on_trip")
+    users_on_trip = models.ManyToManyField(User, related_name="others_on_trip")
+    
+    # def get_absolute_url(self):
+    #     return reverse('travel:detail', args=[str(self.slug)])
 
     def __str__(self):
         return str(self.location)
