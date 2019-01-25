@@ -1,8 +1,10 @@
 from django.conf.urls import url
-from . import views
+from .views import (
+    HomeView,
+)
 
 urlpatterns = [
-    url(r'^dashboard$', views.home, name='home'),
+    url(r'^dashboard$', HomeView.as_view(), name='home'),
     #     # Login and add process
     # url(r'^travels/process_reg$', views.process_reg),
     # url(r'^travels/process_login$', views.process_login),

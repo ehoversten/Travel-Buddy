@@ -2,18 +2,17 @@ from django.contrib.auth import (authenticate, login, get_user_model,logout)
 from django.contrib import messages
 from django.shortcuts import render, redirect, HttpResponse
 import json
-from django.views import View
+from django.views.generic import TemplateView
 from .forms import LoginForm, RegisterForm
 
 User = get_user_model()
 
-class LoginFormView(View):
+class LoginFormView(TemplateView):
     form_class = LoginForm
     initial = {'key': 'value'}
     template_name = 'accounts/login.html'
     def get(self, request, *args, **kwargs):
         if request.user is not None:
-            print('from get ', request.user.is_authenticated)
             if request.user.is_authenticated:
                 return redirect('travel:home')
         else:
@@ -29,12 +28,10 @@ class LoginFormView(View):
             user = authenticate(request, username=username, password=password)
 
         if request.is_ajax():
-
             if not form.errors:
                 login(request, user)
                 response_data = {}
                 response_data['msg'] = 'Logged in! good to go!'
-                print(response_data)
                 return HttpResponse(json.dumps(response_data), content_type="application/json", status=200)
             if form.errors:
                 errors = form.errors.as_json()

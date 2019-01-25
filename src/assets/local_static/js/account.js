@@ -5,7 +5,7 @@ $(document).ready(function () {
     let registerFormMethod = registerForm.attr("method")
     let registerFormEndpoint = registerForm.attr('data-endpoint')
     let navigate = registerForm.attr('href')
-    console.log(navigate)
+    // console.log(navigate)
     
 
 
@@ -86,7 +86,7 @@ $(document).ready(function () {
         let loginFormData = loginForm.serialize()
         let thisForm = $(this)
         displaySubmitting(loginFormSubmitBtn, "", true)
-        console.log(loginFormData)
+        // console.log(loginFormData)
 
         $.ajax({
             method: loginFormMethod,
