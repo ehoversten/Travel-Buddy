@@ -10,6 +10,7 @@ User = get_user_model()
 class LoginFormView(TemplateView):
     form_class = LoginForm
     initial = {'key': 'value'}
+    print('from formloginview ', initial)
     template_name = 'accounts/login.html'
     def get(self, request, *args, **kwargs):
         if request.user is not None:

@@ -4,9 +4,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.core import serializers
 from django.shortcuts import (HttpResponse, redirect, render, get_object_or_404)
+from django.http import JsonResponse
 
 from django.utils.decorators import method_decorator
-from django.views.generic import( TemplateView, ListView, DetailView)
+from django.views.generic import(TemplateView, ListView, DetailView)
 from .forms import TripForm
 
 import json
@@ -16,10 +17,9 @@ from .models import Destination
 User = get_user_model()
 
 
-class HomeView(LoginRequiredMixin,TemplateView):
+class HomeView(LoginRequiredMixin, TemplateView):
     redirect_field_name = 'account:home'
     template_name = 'destinations/dashboard.html'
-
     # form_class = None
     # initial = {'key': 'value'}
 
@@ -33,11 +33,12 @@ class HomeView(LoginRequiredMixin,TemplateView):
         obj_list['user_trips'] = user_results
         obj_list['other_users_trips'] = others_trips
         return obj_list
-    
+
     # Will implement dynamic modal with ajax later
     def post(self, request, *args, **kwargs):
         # form = self.form_class(request.POST)
-        return render(request, self.template_name) #{'form': form})
+        return render(request, self.template_name)  # {'form': form})
+
 
 class DestinationDetailSlugView(DetailView):
     # queryset = Product.objects.all()
@@ -48,7 +49,7 @@ class DestinationDetailSlugView(DetailView):
         slug = self.kwargs.get('slug')
 
         try:
-            instance = Destination.objects.get( slug=slug)  # handling multiple errors
+            instance = Destination.objects.get(slug=slug)  # handling multiple errors
         except Destination.DoesNotExist:
             raise Http404("Not found..")
         except Destination.MultipleObjectsReturned:
@@ -59,11 +60,39 @@ class DestinationDetailSlugView(DetailView):
             raise Http404("Something broke ")
         return instance
 
-class AddDestinationFormView(LoginRequiredMixin,TemplateView):
+
+class AddDestinationFormView(LoginRequiredMixin, TemplateView):
     redirect_field_name = 'account:home'
     form_class = TripForm
-   
+    initial = {'key': 'value'}
+
     template_name = 'destinations/trip_add.html'
+
     def get(self, request, *args, **kwargs):
-        # form = self.form_class(initial=self.initial)
-        return render(request, self.template_name)#, {'form': form})
+        form = self.form_class(initial=self.initial) # do we even need the self.initial??
+        return render(request, self.template_name, {'form': form})
+
+
+def UpdateDestinationView(request):
+    destination_id = request.POST.get('destination_id')
+
+    if destination_id is not None:
+        try:
+            destination_obj = Destination.objects.get(id=destination_id)
+        except Destination.DoesNotExist:
+            print("Show message to user, Destination is inactive?.")
+            return redirect('travel:home')
+        if destination_obj:
+            cart_obj.products.remove(product_obj)
+            added = False
+        else:
+            cart_obj.products.add(product_obj)
+            added = True
+    if request.is_ajax():
+        json_data = {
+            "added": added,
+            "remove": not added,  # always opposite so true or false
+        }
+        return JsonResponse(json_data)
+        # return JsonResponse({"message":"Error 400"}, status=400)
+    return redirect('travel:home')
