@@ -68,7 +68,7 @@ class DestinationManager(models.Manager):
 class Destination(models.Model):
     slug            = models.SlugField(blank=True, unique=True)
     location        = models.CharField(max_length=255)
-    description     = models.CharField(max_length=255)
+    description     = models.TextField()
     start_date      = models.DateField(auto_now=False)
     end_date        = models.DateField(auto_now=False)
     timestamp       = models.DateTimeField(auto_now_add=True)
@@ -77,8 +77,8 @@ class Destination(models.Model):
     planner         = models.ForeignKey(User, related_name="user_planner", on_delete=models.CASCADE)
     users_on_trip = models.ManyToManyField(User, related_name="others_on_trip")
     
-    # def get_absolute_url(self):
-    #     return reverse('travel:detail', args=[str(self.slug)])
+    def get_absolute_url(self):
+        return reverse('travel:detail', args=[str(self.slug)])
 
     def __str__(self):
         return str(self.location)
