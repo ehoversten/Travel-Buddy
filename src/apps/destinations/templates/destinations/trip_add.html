@@ -1,30 +1,32 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    {% load static %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'travel_buddy/css/travel_styles.css' %}">
-    <title>Travel Buddy</title>
-  </head>
-  <body>
-    <div class="wrapper">
-      <div class="header">
-        <div class="navbar">
-          <a class="navbar-brand" href="/travels">
-            <img src="{% static 'travel_buddy/img/airplane_logo.png'%}" alt="airplane logo">
-          </a>
-          <h1>Travel Buddy</h1>
-          <div class="row">
-            <a href="/travels"><button class="btn btn-primary" type="button" name="home_btn">Home</button></a>
-            <a href="/logout"><button class="btn btn-warning" type="button" name="logout_btn">Logout</button></a>
-          </div>
-        </div>
-      </div>
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %} | Add Destination {% endblock %}
+
+{% block content %}
+
+{% url 'home' as home_url %}
+{% url 'account:login' as login_url %}
+{% url 'travel:home' as home_url %}
+{% url 'logout' as logout_url %}
+
+<!-- Navbar Section -->
+<div class="wrapper">
+  <div class="header">
+    <!-- NAV Bar -->
+    <div class="navbar">
+      <a class="navbar-brand" href="{{ home_url }}">
+        <img src="{% static 'img/airplane_logo.png'%}" alt="airplane logo">
+      </a>
+      <h3>Hello, {{ user.first_name }}</h3>
+      <a href="{{ logout_url }}" class="btn btn-info">Add Trip</a> <a href="{{ logout_url }}" class="btn btn-danger">Logout</a>
+    </div>
+  </div>
+
       <div id='add_new' class="container">
 
         <div class="trip_add">
-          <h2>{{ request.session.name }}, Add a Trip</h2>
+          <h2>{{ user.first_name }}, Add a Trip</h2>
           <div class="registration_messages">
             {% if messages %}
               {% for message in messages %}
@@ -32,12 +34,11 @@
               {% endfor %}
             {% endif %}
           </div>
-          <form class="form-group" action="/process_add" method="post">
+          <form class="form-group col-md-7 col-lg-7 register-form" method="POST" action="{% url 'account:register' %}" data-endpoint='{% url "account:register" %}' href='{% url "account:login" %}'>
             {% csrf_token %}
             Destination:<input type="text" name="location" value="">
             Description:<input type="text" name="description" value="">
             <br>
-
             Travel Date From: <input id="start_datepicker" type="date" name="start_date" min="2018-05-21" value="" required>
             <br>
             Travel Date To: <input id="end_datepicker" type="date" name="end_date" min="2018-05-21" value="" required>
@@ -46,5 +47,4 @@
         </div>
       </div>
     </div>
-  </body>
-</html>
+  {% endblock %}

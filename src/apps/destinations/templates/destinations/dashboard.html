@@ -9,6 +9,7 @@
 {% url 'account:login' as login_url %}
 {% url 'travel:home' as home_url %}
 {% url 'logout' as logout_url %}
+{% url 'travel:add_trip' as add_trip_url %}
 
 
 <!-- Navbar Section -->
@@ -20,7 +21,7 @@
             <img src="{% static 'img/airplane_logo.png'%}" alt="airplane logo">
           </a>
           <h3>Hello, {{ user.first_name }}</h3>
-          <a href="{{ logout_url }}" class="btn btn-danger">Logout</a>
+          <a href="{{ add_trip_url }}" class="btn btn-info">Add Trip</a> <a href="{{ logout_url }}" class="btn btn-danger">Logout</a>
         </div>
       </div>
       <!-- Main Content -->
@@ -48,7 +49,7 @@
                     | <a class="#" href="/travels/remove_trip/{{location.id}}">Delete</a>
                     {% endif %}
                   </th>
-                  <td><a href="/travels/destination/{{ location.id }}">{{ location.location }}</a></td>
+                  <td><a href="{{ location.get_absolute_url }}">{{ location.location }}</a></td>
                   <td>{{ location.start_date }}</td>
                   <td>{{ location.end_date }}</td>
                   <td>{{ location.description }}</td>
@@ -68,7 +69,7 @@
           {% endif %}
 
 
-        {% if other_trips %}
+        {% if other_users_trips %}
           <div class="others_trips">
             <h4 class="text-center pad">Other User's Travel Plans</h4>
             <div class="table_container">
@@ -83,17 +84,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                {% for others in all_trips %}
+                {% for trip in other_users_trips %}
                   <tr>
-                    <td>{{ others.planner.name }}</td>
-                    <td><a href="/travels/destination/{{ others.id }}">{{ others.location }}</a></td>
-                    <td>{{ others.start_date }}</td>
-                    <td>{{ others.end_date }}</td>
-                    <td><a href="/travels/join_trip/{{ others.id }}"><button class="btn btn-warning">Join</button></a></td>
-                    <!-- <form class="form-group" action="travels/join_trip" method="post">
-                      {% csrf_token %}
-                      <td><button class="btn btn-warning">Join</button></td>
-                    </form> -->
+                    <td>{{ trip.planner.first_name }}</td>
+                    <td><a href="/travels/destination/{{ trip.id }}">{{ trip.location }}</a></td>
+                    <td>{{ trip.start_date }}</td>
+                    <td>{{ trip.end_date }}</td>
+                    <td><a href="/travels/join_trip/{{ trip.id }}"><button class="btn btn-warning">Join</button></a></td>
                   </tr>
                 {% endfor %}
                 </tbody>

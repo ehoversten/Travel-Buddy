@@ -8,7 +8,7 @@ class LoginForm(forms.Form):
     username = forms.CharField(label="Username", widget=forms.TextInput(
         attrs={"class": "form-control", 'id': 'form_username', "placeholder": "Your Username", }))
     password = forms.CharField(label="Password", widget=forms.PasswordInput(
-        attrs={"class": "form-control", 'id': 'form_password'}))
+        attrs={"class": "form-control", 'id': 'form_password', "placeholder": "Your Password",}))
 
     def clean(self):
         cleaned_data = super().clean()
