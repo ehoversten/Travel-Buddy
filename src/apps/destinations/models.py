@@ -25,7 +25,8 @@ class DestinationManager(models.Manager):
     def completed(self):  # Product.objects.featured()
         return self.get_queryset().completed()
     
-
+    def update(self, request):  # adds or removes the authenticated user
+        pass
     # def search(self, query):
     #     return self.get_queryset().active().search(query)
 

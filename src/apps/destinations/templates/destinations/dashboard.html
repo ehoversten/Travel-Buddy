@@ -44,7 +44,12 @@
               <tbody>
               {% for location in user_trips %}
                 <tr>
-                  <th scope="row"><a href="{{ location.get_absolute_url }}">Remove</a>
+                  <th scope="row">
+                      <form method="POST" action='{% url "travel:destination_update" %}' data-endpoint='{% url "travel:destination_update" %}'>
+                          {% csrf_token %}
+                          <input type="hidden" name="destination_id" value="{{ location.id }}" />
+                        <button class="btn btn-warning btn-sm" type="submit">Remove</button>
+                      </form>
                     {% if location.planner.id == user.id %}
                     | <a class="#" href="/travels/remove_trip/{{location.id}}">Delete</a>
                     {% endif %}
@@ -90,7 +95,11 @@
                     <td><a href="/travels/destination/{{ trip.id }}">{{ trip.location }}</a></td>
                     <td>{{ trip.start_date }}</td>
                     <td>{{ trip.end_date }}</td>
-                    <td><a href="/travels/join_trip/{{ trip.id }}"><button class="btn btn-warning">Join</button></a></td>
+                    <form method="POST" action='{% url "travel:destination_update" %}' data-endpoint='{% url "travel:destination_update" %}'>
+                        {% csrf_token %}
+                        <input type="hidden" name="destination_id" value="{{ trip.id }}" />
+                      <td><button class="btn btn-info" type="submit">Join</button></td>
+                    </form>
                   </tr>
                 {% endfor %}
                 </tbody>

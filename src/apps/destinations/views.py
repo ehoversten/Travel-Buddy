@@ -26,9 +26,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         obj_list = super(HomeView, self).get_context_data(**kwargs)
         qs = Destination.objects.all()
-        user_results = qs.filter(planner=self.request.user)
+        user_results = qs.filter(users_on_trip=self.request.user)
         # print(user_results)
-        others_trips = qs.exclude(planner=self.request.user)
+        others_trips = qs.exclude(users_on_trip=self.request.user)
         # print(others_trips)
         obj_list['user_trips'] = user_results
         obj_list['other_users_trips'] = others_trips
@@ -74,8 +74,9 @@ class AddDestinationFormView(LoginRequiredMixin, TemplateView):
 
 
 def UpdateDestinationView(request):
+    print(request)
     destination_id = request.POST.get('destination_id')
-
+    user = request.user
     if destination_id is not None:
         try:
             destination_obj = Destination.objects.get(id=destination_id)
@@ -83,11 +84,14 @@ def UpdateDestinationView(request):
             print("Show message to user, Destination is inactive?.")
             return redirect('travel:home')
         if destination_obj:
-            cart_obj.products.remove(product_obj)
-            added = False
-        else:
-            cart_obj.products.add(product_obj)
-            added = True
+            # print(destination_obj.users_on_trip.filter(id=user.id).exists())
+            qs = destination_obj.users_on_trip.filter(id=user.id).exists()
+            if qs: #check to see if user is in destination
+                destination_obj.users_on_trip.remove(request.user.id)
+                added = False
+            else:
+                destination_obj.users_on_trip.add(request.user.id)
+                added = True
     if request.is_ajax():
         json_data = {
             "added": added,
