@@ -65,8 +65,16 @@ class AddDestinationFormView(LoginRequiredMixin, TemplateView):
     redirect_field_name = 'account:home'
     form_class = TripForm
     initial = {'key': 'value'}
-
     template_name = 'destinations/trip_add.html'
+
+
+    def post(self, request, *args, **kwargs):
+        user_pk = request.user.id
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            Destination.objects.new(form, request.user)
+        return render(request, self.template_name, {'form': form})
+
 
     def get(self, request, *args, **kwargs):
         form = self.form_class(initial=self.initial) # do we even need the self.initial??

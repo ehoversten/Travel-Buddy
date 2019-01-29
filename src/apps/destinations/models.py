@@ -31,39 +31,43 @@ class DestinationManager(models.Manager):
     #     return self.get_queryset().active().search(query)
 
     def new(self, form, user=None):
+        self.form = form
+        user_obj = user.id
+        print(user_obj)
+        # print(location)
         new_obj = False
         errors = []
+        # if not form['location']:
+        #     errors.append("Location is required")
+        # if not form['description']:
+        #     errors.append("Description is required")
+        # if len(form['description']) < 5:
+        #     errors.append('Description must be at least 5 characters.')
+        # if not form['start_date']:
+        #     errors.append("Please select a Departure date")
+        # elif form['start_date'] < now:
+        #     errors.append('Start date must be in the future')
 
-        if not form['location']:
-            errors.append("Location is required")
-        if not form['description']:
-            errors.append("Description is required")
-        if len(form['description']) < 5:
-            errors.append('Description must be at least 5 characters.')
-        if not form['start_date']:
-            errors.append("Please select a Departure date")
-        elif form['start_date'] < now:
-            errors.append('Start date must be in the future')
+        # if not form['end_date']:
+        #     errors.append('End date is required')
+        # elif form['end_date'] < now:
+        #     errors.append('End date must be in the future')
 
-        if not form['end_date']:
-            errors.append('End date is required')
-        elif form['end_date'] < now:
-            errors.append('End date must be in the future')
-
-        if form['end_date'] < form['start_date']:
-            errors.append('End date must be after start date')
+        # if form['end_date'] < form['start_date']:
+        #     errors.append('End date must be after start date')
 
 
         if not errors:
-            current_user = User.objects.get(id=user_id)
-            location = Destination.objects.create(location=form['location'], description=form['description'], planner=this_user, start_date=form['start_date'], end_date=form['end_date'])
+            print(User.id)
+            
+        #     location = Destination.objects.create(location=form['location'], description=form['description'], planner=this_user, start_date=form['start_date'], end_date=form['end_date'])
 
-            # before returning the location we add it to the logged-in users list.
-            this_user.have_joined.add(location)
+        #     # before returning the location we add it to the logged-in users list.
+        #     this_user.have_joined.add(location)
 
-            return (True, location)
-        else:
-            return (False, errors)
+        #     return (True, location)
+        # else:
+        #     return (False, errors)
 
 
 class Destination(models.Model):
