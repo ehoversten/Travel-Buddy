@@ -33,15 +33,13 @@ class DestinationManager(models.Manager):
     def new(self, form, user=None):
         self.form = form
         user_obj = user.id
-        print(user_obj)
         # print(location)
-        new_obj = False
+        created = False
+        obj = None
         errors = []
-        # if not form['location']:
-        #     errors.append("Location is required")
-        # if not form['description']:
-        #     errors.append("Description is required")
-        # if len(form['description']) < 5:
+
+        if len(form['description']) < 5:
+            print("Description works")
         #     errors.append('Description must be at least 5 characters.')
         # if not form['start_date']:
         #     errors.append("Please select a Departure date")
@@ -68,7 +66,7 @@ class DestinationManager(models.Manager):
         #     return (True, location)
         # else:
         #     return (False, errors)
-
+        return obj, created
 
 class Destination(models.Model):
     slug            = models.SlugField(blank=True, unique=True)

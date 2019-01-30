@@ -72,7 +72,11 @@ class AddDestinationFormView(LoginRequiredMixin, TemplateView):
         user_pk = request.user.id
         form = self.form_class(request.POST)
         if form.is_valid():
-            Destination.objects.new(form, request.user)
+            destination_obj = Destination.objects.new(form, request.user)
+            if destination_obj is not None:
+                print('It works!')
+            else:
+                 return render(request, self.template_name, {'form': form})
         return render(request, self.template_name, {'form': form})
 
 
