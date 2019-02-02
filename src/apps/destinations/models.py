@@ -12,6 +12,7 @@ now = str(datetime.now())
 
 # implement adding images later
 
+
 class DestinationManager(models.Manager):
     def get_queryset(self):
         return DestinationQuerySet(self.model, using=self._db)
@@ -24,62 +25,52 @@ class DestinationManager(models.Manager):
 
     def completed(self):  # Product.objects.featured()
         return self.get_queryset().completed()
-    
+
     def update(self, request):  # adds or removes the authenticated user
         pass
     # def search(self, query):
     #     return self.get_queryset().active().search(query)
 
     def new(self, form, user=None):
-        self.form = form
         user_obj = user.id
-        # print(location)
         created = False
         obj = None
         errors = []
-
-        if len(form['description']) < 5:
-            print("Description works")
-        #     errors.append('Description must be at least 5 characters.')
-        # if not form['start_date']:
-        #     errors.append("Please select a Departure date")
-        # elif form['start_date'] < now:
-        #     errors.append('Start date must be in the future')
-
-        # if not form['end_date']:
-        #     errors.append('End date is required')
-        # elif form['end_date'] < now:
-        #     errors.append('End date must be in the future')
-
-        # if form['end_date'] < form['start_date']:
-        #     errors.append('End date must be after start date')
-
+        if len(form.cleaned_data['description']) < 5:
+            state = ' Description must be at least 5 characters'
+            errors.append(state)
+            form.add_error('description', state)
+        if not form.cleaned_data['start_date']:
+            state = ' Please select a Departure date'
+            errors.append(state)
+            form.add_error('description', state)
+        if not form.cleaned_data['end_date']:
+            errors.append('End date is required')
 
         if not errors:
-            print(User.id)
-            
-        #     location = Destination.objects.create(location=form['location'], description=form['description'], planner=this_user, start_date=form['start_date'], end_date=form['end_date'])
-
-        #     # before returning the location we add it to the logged-in users list.
-        #     this_user.have_joined.add(location)
-
-        #     return (True, location)
-        # else:
-        #     return (False, errors)
+            errors=None
+            created = True
+            obj = Destination.objects.create(location=form.cleaned_data['location'], description=form.cleaned_data['description'], planner=user, start_date=form.cleaned_data['start_date'], end_date=form.cleaned_data['end_date'])
+            obj.users_on_trip.add(user_obj) # find a way of using the user model here instead --idk--?
+            return (obj, errors,created)
+        else:
+            return (obj, errors, created)
         return obj, created
 
+
 class Destination(models.Model):
-    slug            = models.SlugField(blank=True, unique=True)
-    location        = models.CharField(max_length=255)
-    description     = models.TextField()
-    start_date      = models.DateField(auto_now=False)
-    end_date        = models.DateField(auto_now=False)
-    timestamp       = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField(blank=True, unique=True)
+    location = models.CharField(max_length=255)
+    description = models.TextField()
+    start_date = models.DateField(auto_now=False)
+    end_date = models.DateField(auto_now=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False)
 
-    planner         = models.ForeignKey(User, related_name="user_planner", on_delete=models.CASCADE)
+    planner = models.ForeignKey(
+        User, related_name="user_planner", on_delete=models.CASCADE)
     users_on_trip = models.ManyToManyField(User, related_name="others_on_trip")
-    
+
     def get_absolute_url(self):
         return reverse('travel:detail', args=[str(self.slug)])
 
@@ -88,4 +79,5 @@ class Destination(models.Model):
 
     objects = DestinationManager()
 
-pre_save.connect(destination_pre_save_receiver, sender=Destination) 
+
+pre_save.connect(destination_pre_save_receiver, sender=Destination)
