@@ -90,6 +90,17 @@ def UpdateDestinationView(request):
     destination_id = request.POST.get('destination_id')
     is_planner = request.POST.get('planner')
     user = request.user
+    print(is_planner)
+    if is_planner:
+        try:
+            destination_obj = Destination.objects.get(id=destination_id)
+        except Destination.DoesNotExist:
+            print("Show message to user, Destination is inactive?.")
+            return redirect('travel:home')
+        if destination_obj:
+            destination_obj.delete()
+        return redirect('travel:home')
+
     if destination_id is not None:
         try:
             destination_obj = Destination.objects.get(id=destination_id)

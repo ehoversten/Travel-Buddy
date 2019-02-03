@@ -50,8 +50,12 @@
                           <input type="hidden" name="destination_id" value="{{ location.id }}" />
                         <button class="btn btn-warning btn-sm" type="submit">Remove</button>
                       </form>
-                    {% if location.planner.id == user.id %}
-                    | <a class="#" href="/travels/remove_trip/{{location.id}}">Delete</a>
+                    {% if location.planner.id == user.id %}<form method="POST" action='{% url "travel:destination_update" %}' data-endpoint='{% url "travel:destination_update" %}'>
+                          {% csrf_token %}
+                          <input type="hidden" name="destination_id" value="{{ location.id }}" />
+                          <input type="hidden" name="planner" value="{{ True }}" />
+                        <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                      </form>
                     {% endif %}
                   </th>
                   <td><a href="{{ location.get_absolute_url }}">{{ location.location }}</a></td>

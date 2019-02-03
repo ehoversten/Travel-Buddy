@@ -53,8 +53,6 @@ class DestinationManager(models.Manager):
             obj = Destination.objects.create(location=form.cleaned_data['location'], description=form.cleaned_data['description'], planner=user, start_date=form.cleaned_data['start_date'], end_date=form.cleaned_data['end_date'])
             obj.users_on_trip.add(user_obj) # find a way of using the user model here instead --idk--?
             return (obj)
-        else:
-            return (obj)
         return None
 
 
