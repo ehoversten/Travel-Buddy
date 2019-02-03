@@ -22,9 +22,8 @@ class TripForm(forms.Form):
         start_date = cleaned_data.get('start_date').replace(tzinfo=None)
         # start_date = start_date.replace(tzinfo=None)
         #start_date = start_date.utcnow().replace(tzinfo=pytz.UTC) # can )
-
         end_date = cleaned_data.get('end_date').replace(tzinfo=None)
-        print(end_date)
+        
         if not location:
             msg = 'Please provide a location'
             self.add_error('location', msg)

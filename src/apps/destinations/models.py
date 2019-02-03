@@ -33,8 +33,8 @@ class DestinationManager(models.Manager):
 
     def new(self, form, user=None):
         user_obj = user.id
-        created = False
-        obj = None
+        # created = False
+        # obj = None
         errors = []
         if len(form.cleaned_data['description']) < 5:
             state = ' Description must be at least 5 characters'
@@ -48,14 +48,14 @@ class DestinationManager(models.Manager):
             errors.append('End date is required')
 
         if not errors:
-            errors=None
-            created = True
+            # errors=None
+            # created = True
             obj = Destination.objects.create(location=form.cleaned_data['location'], description=form.cleaned_data['description'], planner=user, start_date=form.cleaned_data['start_date'], end_date=form.cleaned_data['end_date'])
             obj.users_on_trip.add(user_obj) # find a way of using the user model here instead --idk--?
-            return (obj, errors,created)
+            return (obj)
         else:
-            return (obj, errors, created)
-        return obj, created
+            return (obj)
+        return None
 
 
 class Destination(models.Model):
