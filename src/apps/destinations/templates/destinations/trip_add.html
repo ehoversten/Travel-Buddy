@@ -1,0 +1,57 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %} | Add Destination {% endblock %}
+
+{% block content %}
+
+{% url 'home' as home_url %}
+{% url 'account:login' as login_url %}
+{% url 'travel:home' as home_url %}
+{% url 'logout' as logout_url %}
+
+<!-- Navbar Section -->
+<div class="wrapper">
+  <div class="header">
+    <!-- NAV Bar -->
+    <div class="navbar">
+      <a class="navbar-brand" href="{{ home_url }}">
+        <img src="{% static 'img/airplane_logo.png'%}" alt="airplane logo">
+      </a>
+      <h3>Hello, {{ user.first_name }}</h3>
+      <a href="{{ logout_url }}" class="btn btn-info">Add Trip</a> <a href="{{ logout_url }}" class="btn btn-danger">Logout</a>
+    </div>
+  </div>
+
+  <div id='add_new' class="container">
+
+    <div class="trip_add">
+      <h2>{{ user.first_name }}, Add a Trip</h2>
+      <div class="registration_messages">
+        {% if messages %}
+        {% for message in messages %}
+        <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+      </div>
+        <form class="form-group col-md-7 col-lg-7 trip-form" method="POST" action="{% url 'travel:add_trip' %}" data-endpoint='{% url "travel:add_trip" %}' href='{% url "travel:home" %}'>
+          {% csrf_token %}
+          {% for field in form %}
+          <div class="form-group">
+            {{ field.label_tag }}
+            {{ field.errors }}
+            {{ field }}
+            {% if field.help_text %}
+            <p class="help">{{ field.help_text|safe }}</p>
+            {% endif %}
+          </div>
+          {% endfor %}
+
+          <div class="form-group ">
+            <button class="btn btn-info" type="submit">Submit</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
