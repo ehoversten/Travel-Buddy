@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # installed application
     'apps.destinations',
+    'apps.accounts',
     'apps.travel_buddy',
 ]
 
