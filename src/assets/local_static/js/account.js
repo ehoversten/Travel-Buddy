@@ -6,7 +6,7 @@ $(document).ready(function () {
     let registerFormEndpoint = registerForm.attr('data-endpoint')
     let navigate = registerForm.attr('href')
     // console.log(navigate)
-    
+
 
 
     function displaySubmitting(submitBtn, defaultText, doSubmit) {
@@ -45,9 +45,9 @@ $(document).ready(function () {
             },
             error: function (error) {
                 let jsonData = error.responseJSON
-                let errors =[]
-                $.each(jsonData, function (key, value) { 
-                   errors.push(value)
+                let errors = []
+                $.each(jsonData, function (key, value) {
+                    errors.push(value)
                 })
                 console.log(errors)
                 console.log(error)
@@ -76,7 +76,6 @@ $(document).ready(function () {
 
     }
 
-    /* I could make this form reusable for the two forms but at the moment seems better to separate them. 1/22/19 */
 
     loginForm.submit(function (e) { // using instead of onClick
         e.preventDefault()
@@ -86,7 +85,6 @@ $(document).ready(function () {
         let loginFormData = loginForm.serialize()
         let thisForm = $(this)
         displaySubmitting(loginFormSubmitBtn, "", true)
-        // console.log(loginFormData)
 
         $.ajax({
             method: loginFormMethod,
@@ -97,17 +95,16 @@ $(document).ready(function () {
                     displaySubmitting(loginFormSubmitBtn, loginFormSubmitBtnTxt, false)
                 }, 500)
                 window.location.href = _navigate;
-                console.log("It works! we guchi")
 
             },
             error: function (error) {
                 let jsonData = error.responseJSON
-                let errors =[]
-                $.each(jsonData, function (key, value) { 
-                   errors.push(value)
+                let errors = []
+                $.each(jsonData, function (key, value) {
+                    errors.push(value)
                 })
-                console.log(errors)
-                console.log(error)
+                console.log(errors) // message we want to render
+                console.log(error) // error obj
                 setTimeout(function () {
                     displaySubmitting(loginFormSubmitBtn, loginFormSubmitBtnTxt, false)
                 }, 500)

@@ -2,7 +2,7 @@
 {% block title %} | Login {% endblock %}
 {% block content %}
 <form class="form-group col-md-7 col-lg-7 login-form" method="POST" action="{% url 'account:login' %}" data-endpoint='{% url "account:login" %}' href='{% url "travel:home" %}'>
-    <h1>Login</h1>
+    <h1 id="login">Login</h1>
     {% csrf_token %}
     {% for field in form %}
     <div class="form-group">

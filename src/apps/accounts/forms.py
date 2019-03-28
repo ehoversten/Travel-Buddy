@@ -4,11 +4,12 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 User = get_user_model()
 
+
 class LoginForm(forms.Form):
     username = forms.CharField(label="Username", widget=forms.TextInput(
         attrs={"class": "form-control", 'id': 'form_username', "placeholder": "Your Username", }))
     password = forms.CharField(label="Password", widget=forms.PasswordInput(
-        attrs={"class": "form-control", 'id': 'form_password', "placeholder": "Your Password",}))
+        attrs={"class": "form-control", 'id': 'form_password', "placeholder": "Your Password", }))
 
     def clean(self):
         cleaned_data = super().clean()
@@ -18,12 +19,10 @@ class LoginForm(forms.Form):
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             user = None
-        # print(user)
         if user is None:
-                msg = 'Please register first'
-                self.add_error('username', msg)
+            msg = 'Please register first'
+            self.add_error('username', msg)
         else:
-            # print(not user.check_password(password))
             if not user.check_password(password):
                 userError = 'Invalid Credentials'
                 self.add_error('password', userError)
@@ -42,8 +41,7 @@ class RegisterForm(forms.Form):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        # Queryset
-        if User.objects.filter(username=username).exists(): 
+        if User.objects.filter(username=username).exists():
             raise forms.ValidationError("Username is taken")
         return username
 
@@ -52,13 +50,13 @@ class RegisterForm(forms.Form):
         password2 = cleaned_data.get('password2')
         password = cleaned_data.get('password')
         email = cleaned_data.get('email')
-        # print(password, password2)
+
         if password and password2:
             if password2 != password:
                 msg = 'Passwords must match'
                 self.add_error('password', msg)
         if User.objects.filter(email=email).exists():
-                userError = 'Email Already Taken'
-                self.add_error('password', userError)
+            userError = 'Email Already Taken'
+            self.add_error('password', userError)
 
         return cleaned_data
