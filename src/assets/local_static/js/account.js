@@ -84,6 +84,7 @@ $(document).ready(function () {
         let loginFormSubmitBtnTxt = loginFormSubmitBtn.text()
         let loginFormData = loginForm.serialize()
         let thisForm = $(this)
+        let error_p = $('#errors')
         displaySubmitting(loginFormSubmitBtn, "", true)
 
         $.ajax({
@@ -104,7 +105,9 @@ $(document).ready(function () {
                     errors.push(value)
                 })
                 console.log(errors) // message we want to render
-                console.log(error) // error obj
+                for (let err of errors) {
+                    error_p.html(`<p>${ err[0]["message"]}</p>`)
+                }
                 setTimeout(function () {
                     displaySubmitting(loginFormSubmitBtn, loginFormSubmitBtnTxt, false)
                 }, 500)
