@@ -1,5 +1,6 @@
 'use strict';
 $(document).ready(function () {
+    $('#errors').hide()
     // Register Form Handler
     let registerForm = $(".register-form")
     let registerFormMethod = registerForm.attr("method")
@@ -30,7 +31,8 @@ $(document).ready(function () {
         let registerFormData = registerForm.serialize()
         let thisForm = $(this)
         displaySubmitting(registerFormSubmitBtn, "", true)
-        console.log(registerFormData)
+        // console.log(registerFormData)
+        let error_tag = $('#errors')
 
         $.ajax({
             method: registerFormMethod,
@@ -49,8 +51,11 @@ $(document).ready(function () {
                 $.each(jsonData, function (key, value) {
                     errors.push(value)
                 })
-                console.log(errors)
-                console.log(error)
+                for (let err of errors) {
+                    error_tag.html(`<p>${err[0]["message"]}</p>`)
+                }
+                error_tag.show()
+                
                 setTimeout(function () {
                     displaySubmitting(registerFormSubmitBtn, registerFormSubmitBtnTxt, false)
                 }, 500)
@@ -62,7 +67,6 @@ $(document).ready(function () {
     let loginFormMethod = loginForm.attr("method")
     let loginFormEndpoint = loginForm.attr('data-endpoint')
     let _navigate = loginForm.attr('href')
-    console.log(_navigate)
 
 
     function displaySubmitting(submitBtn, defaultText, doSubmit) {
@@ -104,10 +108,11 @@ $(document).ready(function () {
                 $.each(jsonData, function (key, value) {
                     errors.push(value)
                 })
-                console.log(errors) // message we want to render
+                // console.log(errors) // message we want to render
                 for (let err of errors) {
                     error_p.html(`<p>${ err[0]["message"]}</p>`)
                 }
+                error_p.show()
                 setTimeout(function () {
                     displaySubmitting(loginFormSubmitBtn, loginFormSubmitBtnTxt, false)
                 }, 500)
@@ -115,3 +120,7 @@ $(document).ready(function () {
         })
     })
 })
+
+
+// using Generator on error
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*

@@ -2,7 +2,7 @@
   margin: 0px auto;
 }
 
-body{
+body {
   /* background-color: #0f121f; */
   color: #000;
   /* background-image: url(/static/travel_buddy/img/fly_with_me.jpg); */
@@ -13,6 +13,11 @@ body{
   -o-background-size: cover;
   background-size: cover;
 }
+
+#errors {
+  color: darkred;
+}
+
 
 .header {
   /* height: 80px; */
@@ -119,7 +124,8 @@ button {
   width: 75%;
 }
 
-.user_trips, .others_trips{
+.user_trips,
+.others_trips {
   margin: 0px auto;
 }
 
