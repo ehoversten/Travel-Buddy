@@ -96,7 +96,7 @@
                 {% for trip in other_users_trips %}
                   <tr>
                     <td class="d-none d-md-block">{{ trip.planner.first_name }}</td>
-                    <td><a href="/travels/destination/{{ trip.id }}">{{ trip.location }}</a></td>
+                    <td><a href="{{ trip.get_absolute_url }}">{{ trip.location }}</a></td>
                     <td>{{ trip.start_date }}</td>
                     <td>{{ trip.end_date }}</td>
                     <form method="POST" action='{% url "travel:destination_update" %}' data-endpoint='{% url "travel:destination_update" %}'>
