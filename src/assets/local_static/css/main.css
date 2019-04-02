@@ -12,10 +12,12 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background-repeat: no-repeat;
 }
 
 #errors {
   color: darkred;
+  font-weight: bold
 }
 
 
