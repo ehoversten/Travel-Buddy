@@ -5,17 +5,18 @@
 
 {% block content %}
 
-{% url 'home' as home_url %}
 {% url 'account:login' as login_url %}
-{% url 'travel:home' as home_url %}
-{% url 'logout' as logout_url %}
-{% url 'travel:add_trip' as add_trip_url %}
 
+<!-- 
+{% load static %}
+{% url 'home' as home_url %}
+{% url 'travel:home' as home_url %}
+{% url 'travel:add_trip' as add_trip_url %}
+{% url 'logout' as logout_url %} -->
 
 <!-- Navbar Section -->
-    <div class="wrapper">
-      <div class="header">
-        <!-- NAV Bar -->
+    <!-- <div class="wrapper">
+      <div class="header"
         <div class="navbar">
           <a class="navbar-brand" href="{{ home_url }}">
             <img src="{% static 'img/airplane_logo.png'%}" alt="airplane logo">
@@ -23,21 +24,22 @@
           <h3>Hello, {{ user.first_name }}</h3>
           <a href="{{ add_trip_url }}" class="btn btn-info">Add Trip</a> <a href="{{ logout_url }}" class="btn btn-danger">Logout</a>
         </div>
-      </div>
+      </div> -->
       <!-- Main Content -->
       <div class="container">
+        {% include 'partials/navbar.html' %}
 
         <div class="user_trips" id="">
         {% if user_trips %}
           <h4 class="text-center">Your Scheduled Trips</h4>
-          <div class="table_container">
+          <div class="table_container ">
             <table class="table table-dark text-center" >
               <thead>
                 <tr >
                   <th scope="col .d-none .d-s-block">#</th>
                   <th scope="col">Destination</th>
-                  <th scope="col">Travel Start Date</th>
-                  <th scope="col">Travel End Date</th>
+                  <th scope="col">Start Date</th>
+                  <th scope="col">End Date</th>
                   <th scope="col">Plan</th>
                 </tr>
               </thead>
@@ -81,8 +83,8 @@
         {% if other_users_trips %}
           <div class="others_trips">
             <h4 class="text-center pad">Other User's Travel Plans</h4>
-            <div class="table_container">
-              <table class="table table-dark text-center">
+            <div class="table_container ">
+              <table class="table table-dark text-center rounded-lg">
                 <thead>
                   <tr>
                     <th scope="col" class="d-none d-md-block">Name</th>
@@ -118,7 +120,5 @@
           </div>
           </div>
         {% endif %}
-      </div>
-    </div>
 
 {% endblock %}
