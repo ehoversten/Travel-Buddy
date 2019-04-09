@@ -77,7 +77,7 @@ class AddDestinationFormView(LoginRequiredMixin, TemplateView):
         if form.is_valid():
             instance = Destination.objects.new(form, request.user)
             if instance:
-                print(instance)
+                # print(instance)
                 return redirect('travel:home')
             else:
                 return render(request, self.template_name, {'form': form})
@@ -93,7 +93,7 @@ def UpdateDestinationView(request):
     destination_id = request.POST.get('destination_id')
     is_planner = request.POST.get('planner')
     user = request.user
-    print(is_planner)
+    # print(is_planner)
     if is_planner:
         try:
             destination_obj = Destination.objects.get(id=destination_id)
