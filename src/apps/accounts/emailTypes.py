@@ -1,0 +1,1 @@
+approvedEmails = ["gmail.com", "mail.com", "yahoo.com", ".edu"]
