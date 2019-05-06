@@ -3,7 +3,8 @@ from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.core import serializers
-from django.shortcuts import (HttpResponse, redirect, render, get_object_or_404)
+from django.shortcuts import (
+    HttpResponse, redirect, render, get_object_or_404)
 from django.http import JsonResponse
 
 from django.utils.decorators import method_decorator
@@ -42,14 +43,15 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
 class DestinationDetailSlugView(DetailView):
     # queryset = Product.objects.all()
-    template_name = "destinations/detail.html"
+    template_name = "destinations/trip_detail.html"
 
     def get_object(self, *args, **kwargs):
         request = self.request
         slug = self.kwargs.get('slug')
-
         try:
-            instance = Destination.objects.get(slug=slug)  # handling multiple errors
+            instance = Destination.objects.get(
+                slug=slug)
+                # handling multiple errors
         except Destination.DoesNotExist:
             raise Http404("Not found..")
         except Destination.MultipleObjectsReturned:
@@ -58,6 +60,8 @@ class DestinationDetailSlugView(DetailView):
             instance = qs.first()
         except:
             raise Http404("Something broke ")
+        # for users in instance.users_on_trip.all():
+        #     print(users)
         return instance
 
 
@@ -67,22 +71,21 @@ class AddDestinationFormView(LoginRequiredMixin, TemplateView):
     initial = {'key': 'value'}
     template_name = 'destinations/trip_add.html'
 
-
     def post(self, request, *args, **kwargs):
         user_pk = request.user.id
         form = self.form_class(request.POST)
         if form.is_valid():
             instance = Destination.objects.new(form, request.user)
             if instance:
-                print(instance)
+                # print(instance)
                 return redirect('travel:home')
             else:
                 return render(request, self.template_name, {'form': form})
         return render(request, self.template_name, {'form': form})
 
-
     def get(self, request, *args, **kwargs):
-        form = self.form_class(initial=self.initial) # do we even need the self.initial??
+        # do we even need the self.initial??
+        form = self.form_class(initial=self.initial)
         return render(request, self.template_name, {'form': form})
 
 
@@ -90,7 +93,7 @@ def UpdateDestinationView(request):
     destination_id = request.POST.get('destination_id')
     is_planner = request.POST.get('planner')
     user = request.user
-    print(is_planner)
+    # print(is_planner)
     if is_planner:
         try:
             destination_obj = Destination.objects.get(id=destination_id)
@@ -110,7 +113,7 @@ def UpdateDestinationView(request):
         if destination_obj:
             # print(destination_obj.users_on_trip.filter(id=user.id).exists())
             qs = destination_obj.users_on_trip.filter(id=user.id).exists()
-            if qs: #check to see if user is in destination
+            if qs:  # check to see if user is in destination
                 destination_obj.users_on_trip.remove(request.user.id)
                 added = False
             else:
