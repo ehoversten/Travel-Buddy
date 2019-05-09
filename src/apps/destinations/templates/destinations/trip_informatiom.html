@@ -24,19 +24,23 @@
       <div class="container">
 
         <div class="row">
-          <div class="this_destination">
-            <h2>Destination: {{ destination.location }}</h2>
-            <h5>Planned By: {{ destination.planner.name }}</h5>
-            <h5>Description: {{ destination.description }}</h5>
-            <h5>Travel Date From: {{ destination.start_date }}</h5>
-            <h5>Travel Date To: {{ destination.end_date }}</h5>
+          <div class="col-md-6">
+            <div class="this_destination">
+              <h2>Destination: {{ destination.location }}</h2>
+              <h5>Planned By: {{ destination.planner.name }}</h5>
+              <h5>Description: {{ destination.description }}</h5>
+              <h5>Travel Date From: {{ destination.start_date }}</h5>
+              <h5>Travel Date To: {{ destination.end_date }}</h5>
+            </div>
           </div>
 
-          <div class="others_this_destination">
-            <h2>Accompaning Travelers:</h2>
-            {% for user in others %}
-            <h5>{{ user.name }}</h5>
-            {% endfor %}
+          <div class="col-md-6">
+            <div class="others_this_destination">
+              <h2>Accompaning Travelers:</h2>
+              {% for user in others %}
+              <h5>{{ user.name }}</h5>
+              {% endfor %}
+            </div>
           </div>
         </div>
 
