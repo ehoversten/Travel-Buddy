@@ -25,12 +25,21 @@ body {
 }
 
 .this_destination, .others_this_destination {
-  background: rgba(233, 248, 252, 0.7);
+  background: rgba(172, 184, 185, 0.66);
+  line-height: 1.5em;
   padding: 10px 20px;
+  margin: 20px 0px;
   border-radius: 15px;
-  border: 2px solid black;
+  border: 2px solid #7c7f88;
 }
 
 .others_this_destination {
   text-align: center;
+}
+
+.trip-form, .login-form, .register-form {
+  background: rgba(172, 184, 185, 0.66);
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: 2px solid #7c7f88;
 }
