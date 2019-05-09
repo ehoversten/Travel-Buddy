@@ -1,0 +1,34 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %} | Dashboard {% endblock %}
+
+{% block content %}
+
+{% url 'home' as home_url %}
+{% url 'account:login' as login_url %}
+{% url 'travel:home' as home_url %}
+{% url 'logout' as logout_url %}
+{% url 'travel:add_trip' as add_trip_url %}
+<div class="container">
+
+  <div class="row">
+    <div class="this_destination">
+      <h2>Destination: {{ destination.location }}</h2>
+      <h5>Planned By: {{ destination.planner }}</h5>
+      <h5>Description: {{ destination.description }}</h5>
+      <h5>Travel Date From: {{ destination.start_date }}</h5>
+      <h5>Travel Date To: {{ destination.end_date }}</h5>
+    </div>
+
+    <div class="others_this_destination">
+      <h2>Accompaning Travelers:</h2>
+      {% for user in destination.users_on_trip.all %}
+      <h5>{{ user }}</h5>
+      {% endfor %}
+    </div>
+  </div>
+
+
+</div>
+{% endblock %}

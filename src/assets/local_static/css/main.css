@@ -1,10 +1,5 @@
-* {
-  margin: 0px auto;
-}
-
 body {
   /* background-color: #0f121f; */
-  color: #000;
   /* background-image: url(/static/travel_buddy/img/fly_with_me.jpg); */
   background-image: url(/static/travel_buddy/img/window_light.jpg);
   /* background-image: url(/static/travel_buddy/img/window.jpg); */
@@ -20,117 +15,6 @@ body {
   font-weight: bold
 }
 
-
-.header {
-  /* height: 80px; */
-  /* background-color: #f93b22; */
-  text-align: center;
-  margin-bottom: 50px;
-  /* border-bottom: 5px solid black; */
-}
-
-
 .navbar img {
   width: 60px;
-  margin: 10px 20px;
-}
-
-.navbar a {
-  margin-right: 15px;
-}
-
-.navbar h3 {
-  margin-left: 15px;
-}
-
-.navbar h1 {
-  text-align: center;
-}
-
-.navbar-brand {
-  margin: 0px;
-}
-
-
-h1 {
-  padding-top: 20px;
-}
-
-h2 {
-  margin-bottom: 25px;
-}
-
-h5 {
-  text-align: center;
-}
-
-.main_container {
-  display: flex;
-}
-
-.registration {
-  width: 40%;
-  height: 600px;
-  display: inline-block;
-  border: 3px solid black;
-  border-radius: 15px;
-  padding: 20px;
-  margin-right: 35px;
-}
-
-.registration h2 {
-  text-align: center;
-}
-
-.registration_messages p {
-  display: inline-block;
-  border: none;
-  /* width: 40%; */
-  /* height: 30px; */
-}
-
-
-.login {
-  width: 40%;
-  height: 450px;
-  display: inline-block;
-  border: 3px solid black;
-  border-radius: 15px;
-  padding: 20px;
-}
-
-.login h2 {
-  text-align: center;
-}
-
-.login_messages p {
-  display: inline-block;
-  border: none;
-  width: 100%;
-  height: 20px;
-  margin-bottom: 0px;
-  padding: 8px 15px;
-}
-
-input {
-  width: 90%;
-  padding: 7px 0px;
-  margin: 10px 10px;
-}
-
-button {
-  margin-top: 15px;
-}
-
-.form_container {
-  width: 75%;
-}
-
-.user_trips,
-.others_trips {
-  margin: 0px auto;
-}
-
-.trip_add {
-  width: 75%;
 }

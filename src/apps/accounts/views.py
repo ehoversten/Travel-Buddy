@@ -63,7 +63,6 @@ def register_view(req):
             if not form.errors:
                 response_data = {}
                 response_data['msg'] = 'Good to go!'
-                print(response_data)
                 return HttpResponse(json.dumps(response_data),content_type="application/json", status=200)
             if form.errors:
                 errors = form.errors.as_json()
