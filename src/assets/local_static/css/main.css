@@ -15,6 +15,22 @@ body {
   font-weight: bold
 }
 
+.navbar {
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ccc;
+}
+
 .navbar img {
   width: 60px;
+}
+
+.this_destination, .others_this_destination {
+  background: rgba(233, 248, 252, 0.7);
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: 2px solid black;
+}
+
+.others_this_destination {
+  text-align: center;
 }
