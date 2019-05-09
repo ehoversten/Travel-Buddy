@@ -42,7 +42,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
 class DestinationDetailSlugView(DetailView):
     # queryset = Product.objects.all()
-    template_name = "destinations/detail.html"
+    template_name = "destinations/trip_information.html"
 
     def get_object(self, *args, **kwargs):
         request = self.request
