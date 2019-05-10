@@ -7,99 +7,95 @@
 
 {% url 'account:login' as login_url %}
 
-    {% include 'partials/navbar.html' %}
-    <div class="container">
+{% include 'partials/navbar.html' %}
+<div class="container">
 
-      <div class="user_trips" id="">
-      {% if user_trips %}
-        <h4 class="text-center">Your Scheduled Trips</h4>
-        <div class="table_container ">
-          <table class="table table-dark text-center" >
-            <thead>
-              <tr >
-                <th scope="col .d-none .d-s-block">#</th>
-                <th scope="col">Destination</th>
-                <th scope="col">Start Date</th>
-                <th scope="col">End Date</th>
-                <th scope="col">Plan</th>
-              </tr>
-            </thead>
-            <tbody>
-            {% for location in user_trips %}
-              <tr>
-                <th scope="row form-inline">
-                    <form class="form-destination-ajax" method="POST" action='{% url "travel:destination_update" %}' data-endpoint='{% url "travel:destination_update" %}'>
-                        {% csrf_token %}
-                        <input type="hidden" name="destination_id" value="{{ location.id }}" />
-                      <button class="btn btn-warning btn-sm" type="submit">Remove</button>
-                    </form>
-                  {% if location.planner.id == user.id %}<form class="form-destination-ajax pt-1" method="POST" action='{% url "travel:destination_update" %}' data-endpoint='{% url "travel:destination_update" %}'>
-                        {% csrf_token %}
-                        <input type="hidden" name="destination_id" value="{{ location.id }}" />
-                        <input type="hidden" name="planner" value="{{ True }}" />
-                      <button class="btn btn-danger btn-sm" type="submit">Delete</button>
-                    </form>
-                  {% endif %}
-                </th>
-                <td><a href="{{ location.get_absolute_url }}">{{ location.location }}</a></td>
-                <td>{{ location.start_date }}</td>
-                <td>{{ location.end_date }}</td>
-                <td>{{ location.description }}</td>
-              </tr>
-            {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        {% else %}
-          <div class="row">
-              <h3>
-                  No Trips scheduled. <a  class="btn btn-warning btn-sm" href=""> Add Plan</a>
-                </h3>
-            
-          </div>
-        </div>
-        {% endif %}
+  <div class="user_trips" id="">
+    {% if user_trips %}
+    <h4 class="text-center">Your Scheduled Trips</h4>
+      <table class="table table-hover table-dark text-center">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Destination</th>
+            <th scope="col">From</th>
+            <th scope="col">To</th>
+            <th scope="col"  class="d-none d-lg-block">Plan</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for location in user_trips %}
+          <tr>
+            <th scope="row form-inline">
+              <form class="form-destination-ajax" method="POST" action='{% url "travel:destination_update" %}'
+                data-endpoint='{% url "travel:destination_update" %}'>
+                {% csrf_token %}
+                <input type="hidden" name="destination_id" value="{{ location.id }}" />
+                <button class="btn btn-warning btn-sm" type="submit">Remove</button>
+              </form>
+              {% if location.planner.id == user.id %}<form class="form-destination-ajax pt-1" method="POST"
+                action='{% url "travel:destination_update" %}' data-endpoint='{% url "travel:destination_update" %}'>
+                {% csrf_token %}
+                <input type="hidden" name="destination_id" value="{{ location.id }}" />
+                <input type="hidden" name="planner" value="{{ True }}" />
+                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+              </form>
+              {% endif %}
+            </th>
+            <td><a href="{{ location.get_absolute_url }}">{{ location.location }}</a></td>
+            <td>{{ location.start_date }}</td>
+            <td>{{ location.end_date }}</td>
+            <td class="d-none d-lg-block">{{ location.description }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+  </div>
+  <h3 class="text-center pb-2">
+    No Trips scheduled: <a class="btn btn-warning btn-sm" href='{% url "travel:add_trip" %}'> Add Plan</a>
+  </h3>
+  {% endif %}
 
 
-      {% if other_users_trips %}
-        <div class="others_trips">
-          <h4 class="text-center pad">Other User's Travel Plans</h4>
-          <div class="table_container ">
-            <table class="table table-dark text-center rounded-lg">
-              <thead>
-                <tr>
-                  <th scope="col" class="d-none d-lg-block">Name</th>
-                  <th scope="col">Destination</th>
-                  <th scope="col">Travel Start Date</th>
-                  <th scope="col">Travel End Date</th>
-                  <th scope="col">Do you want to Join?</th>
-                </tr>
-              </thead>
-              <tbody>
-              {% for trip in other_users_trips %}
-                <tr>
-                  <td class="d-none d-none d-lg-block">{{ trip.planner.first_name }}</td>
-                  <td><a href="{{ trip.get_absolute_url }}">{{ trip.location }}</a></td>
-                  <td>{{ trip.start_date }}</td>
-                  <td>{{ trip.end_date }}</td>
-                  <form class="form-destination-ajax" method="POST" action='{% url "travel:destination_update" %}' data-endpoint='{% url "travel:destination_update" %}'>
-                      {% csrf_token %}
-                      <input type="hidden" name="destination_id" value="{{ trip.id }}" />
-                    <td><button class="btn btn-info" type="submit">Join</button></td>
-                  </form>
-                </tr>
-              {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-        {% else %}
-        <div class="row">
-            <h3>
-                There no trips scheduled by other users.
-            </h3>
-        </div>
-        </div>
-      {% endif %}
+  {% if other_users_trips %}
+  <div class="others_trips">
+    <h4 class="text-center pad">Other User's Travel Plans</h4>
+    <div class="table-responsive-md">
+      <table class="table table-hover table-dark text-center rounded-lg">
+        <thead>
+          <tr>
+            <th scope="col" class="d-none d-lg-block">Name</th>
+            <th scope="col">Destination</th>
+            <th scope="col">From</th>
+            <th scope="col">To</th>
+            <th scope="col">Want to Join?</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for trip in other_users_trips %}
+          <tr>
+            <td class="d-none d-lg-block">{{ trip.planner.first_name }}</td>
+            <td><a href="{{ trip.get_absolute_url }}">{{ trip.location }}</a></td>
+            <td>{{ trip.start_date }}</td>
+            <td>{{ trip.end_date }}</td>
+            <form class="form-destination-ajax" method="POST" action='{% url "travel:destination_update" %}'
+              data-endpoint='{% url "travel:destination_update" %}'>
+              {% csrf_token %}
+              <input type="hidden" name="destination_id" value="{{ trip.id }}" />
+              <td><button class="btn btn-info" type="submit">Join</button></td>
+            </form>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% else %}
+  <h3 class="text-center pt-2">
+    No other trips are scheduled
+  </h3>
+</div>
+{% endif %}
 
 {% endblock %}

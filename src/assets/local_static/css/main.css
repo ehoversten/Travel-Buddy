@@ -1,8 +1,6 @@
 body {
   /* background-color: #0f121f; */
-  /* background-image: url(/static/travel_buddy/img/fly_with_me.jpg); */
-  background-image: url(/static/travel_buddy/img/window_light.jpg);
-  /* background-image: url(/static/travel_buddy/img/window.jpg); */
+  background-image: url(../img/window_light.jpg);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -24,18 +22,18 @@ body {
   width: 60px;
 }
 
-.this_destination, .others_this_destination {
+/* .this_destination, .others_this_destination {
   background: rgba(172, 184, 185, 0.66);
   line-height: 1.5em;
   padding: 10px 20px;
   margin: 20px 0px;
   border-radius: 15px;
   border: 2px solid #7c7f88;
-}
-
+} */
+/* 
 .others_this_destination {
   text-align: center;
-}
+} */
 
 .trip-form, .login-form, .register-form {
   background: rgba(172, 184, 185, 0.66);
@@ -43,3 +41,4 @@ body {
   border-radius: 15px;
   border: 2px solid #7c7f88;
 }
+
