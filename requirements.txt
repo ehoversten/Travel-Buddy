@@ -3,7 +3,7 @@ astroid==1.6.3
 autopep8==1.4.3
 backcall==0.1.0
 bcrypt==3.1.4
-bleach==3.0.2
+bleach==3.1.5
 certifi==2018.4.16
 cffi==1.11.5
 chardet==3.0.4
@@ -11,7 +11,7 @@ click==6.7
 cycler==0.10.0
 decorator==4.3.0
 defusedxml==0.5.0
-Django==2.2.1
+Django==2.2.15
 django-debug-toolbar==1.9.1
 django-filter==2.0.0
 entrypoints==0.2.3
@@ -41,6 +41,7 @@ nbconvert==5.5.0
 nbformat==4.4.0
 notebook==5.7.8
 numpy==1.14.2
+packaging==20.4
 pandocfilters==1.4.2
 parso==0.4.0
 pexpect==4.7.0
@@ -59,6 +60,7 @@ pylint-plugin-utils==0.2.6
 PyMySQL==0.8.1
 pyparsing==2.2.0
 python-dateutil==2.7.2
+python-dotenv==0.14.0
 pytz==2018.4
 pyzmq==17.1.2
 qtconsole==4.4.3
@@ -74,6 +76,6 @@ urllib3==1.25.10
 virtualenv==15.2.0
 wcwidth==0.1.7
 webencodings==0.5.1
-Werkzeug==0.14.1
+Werkzeug==1.0.1
 widgetsnbextension==3.4.2
 wrapt==1.10.11
