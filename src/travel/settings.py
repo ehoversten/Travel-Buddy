@@ -4,7 +4,7 @@ Django settings for travel project.
 """
 
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenvaster
 load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
