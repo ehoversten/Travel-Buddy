@@ -119,12 +119,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 STATIC_URL = '/static/'
 
+#before deployment
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'./assets/local_static',)
 ]
 # print(STATICFILES_DIRS)
 
-# This is what actually serves the files
+# After deployment
 STATIC_ROOT = os.path.join(BASE_DIR, "./assets", 'static_cdn')
 
 # Media Files, if we use them.

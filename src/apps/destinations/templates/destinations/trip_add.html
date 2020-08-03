@@ -12,21 +12,35 @@
 
 <!-- Navbar Section -->
 <div class="wrapper">
-  <div class="header">
-    <!-- NAV Bar -->
-    <div class="navbar">
-      <a class="navbar-brand" href="{{ home_url }}">
+  <!-- navbar section -->
+  <nav class="navbar navbar-expand-sm navbar-dark rounded">
+    <div class="container">
+      <a class="navbar-brand d-none d-md-inline" href="{{ home_url }}">
         <img src="{% static 'img/airplane_logo.png'%}" alt="airplane logo">
       </a>
-      <h3>Hello, {{ user.first_name }}</h3>
-      <a href="{{ logout_url }}" class="btn btn-info">Add Trip</a> <a href="{{ logout_url }}" class="btn btn-danger">Logout</a>
+      <!-- Hamburger button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item mr-3">
+            <a href="{{ home_url }}" class="btn btn-info">Dashboard</a>
+          </li>
+          <li class="nav-item ">
+            <a href="{{ logout_url }}" class="btn btn-danger">Logout</a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
+  </nav>
 
-  <div id='add_new' class="container">
+  <div id='add_new' class="container mb-5">
 
     <div class="trip_add">
-      <h2>{{ user.first_name }}, Add a Trip</h2>
+      <h2 class="text-center">Plan a Trip</h2>
       <div class="registration_messages">
         {% if messages %}
         {% for message in messages %}
@@ -34,23 +48,23 @@
         {% endfor %}
         {% endif %}
       </div>
-        <form class="form-group col-md-7 col-lg-7 trip-form" method="POST" action="{% url 'travel:add_trip' %}" data-endpoint='{% url "travel:add_trip" %}' href='{% url "travel:home" %}'>
-          {% csrf_token %}
-          {% for field in form %}
-          <div class="form-group">
-            {{ field.label_tag }}
-            {{ field.errors }}
-            {{ field }}
-            {% if field.help_text %}
-            <p class="help">{{ field.help_text|safe }}</p>
-            {% endif %}
-          </div>
-          {% endfor %}
+      <form class="form-group col-md-7 col-lg-7 trip-form m-auto" method="POST" action="{% url 'travel:add_trip' %}" data-endpoint='{% url "travel:add_trip" %}' href='{% url "travel:home" %}'>
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+          {{ field.label_tag }}
+          {{ field.errors }}
+          {{ field }}
+          {% if field.help_text %}
+          <p class="help">{{ field.help_text|safe }}</p>
+          {% endif %}
+        </div>
+        {% endfor %}
 
-          <div class="form-group ">
-            <button class="btn btn-info" type="submit">Submit</button>
-          </div>
-        </form>
+        <div class="form-group ">
+          <button class="btn btn-info" type="submit">Submit</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

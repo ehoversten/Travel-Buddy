@@ -25,7 +25,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item ">
-                    Not Registered Yet? 
+                    Not Registered Yet?
                     <a href="{{ register_url }}" class="btn btn-warning ml-2">Register</a>
                 </li>
             </ul>
@@ -33,9 +33,10 @@
     </div>
 </nav>
 
-<div id="login-form">
-    <form class="form-group col-md-7 col-lg-7 login-form m-auto" method="POST" action="{% url 'account:login' %}" data-endpoint='{% url "account:login" %}' href='{% url "travel:home" %}'>
-        <h1 id="login">Please Login</h1>
+<div id="login-form mb-5">
+    <form class="form-group col-md-7 col-lg-7 login-form m-auto" method="POST" action="{% url 'account:login' %}"
+        data-endpoint='{% url "account:login" %}' href='{% url "travel:home" %}'>
+        <h1 id="login" class="text-center">Please Login</h1>
         <div id="errors">
         </div>
         {% csrf_token %}
@@ -49,7 +50,7 @@
             {% endif %}
         </div>
         {% endfor %}
-            <button class="btn btn-info" type="submit">Submit</button>
+        <button class="btn btn-info" type="submit">Submit</button>
     </form>
 </div>
 
