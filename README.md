@@ -25,9 +25,9 @@ Web app that allows signed in users to plan and add. add or, remove their own sc
 
 ![App Register Image](./src/assets/static_cdn/img/Login.png)
 
-![App Dashboard Image](./src/assets/static_cdn/img/Login.png)
+![App Dashboard Image](./src/assets/static_cdn/img/dashboard.png)
 
-![App Add Image](./src/assets/static_cdn/img/Login.png)
+![App Add Image](./src/assets/static_cdn/img/plan_trip.png)
 
 ![App Detail Image](./src/assets/static_cdn/img/Login.png)
 
