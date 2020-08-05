@@ -4,7 +4,7 @@
 
 ## Description
 
-Web app that allows signed in users to plan and add. add or, remove their own scheduled trips and join other trips planned by other users.
+Python and Django based Web application that allows Users to Register and Login. Once authorized Users are able to plan and add a Trip that will be displayed on their dashboard, along with other trips that have been created by other Users. Users then may add or, remove their own scheduled trips and join other planned trips. Only Trips created by the user may be modified or removed.
 
 
 &nbsp;
@@ -23,13 +23,13 @@ Web app that allows signed in users to plan and add. add or, remove their own sc
 
 ![App Login Image](./src/assets/static_cdn/img/Login.png)
 
-![App Register Image](./src/assets/static_cdn/img/Login.png)
+![App Register Image](./src/assets/static_cdn/img/register.png)
 
 ![App Dashboard Image](./src/assets/static_cdn/img/dashboard.png)
 
 ![App Add Image](./src/assets/static_cdn/img/plan_trip.png)
 
-![App Detail Image](./src/assets/static_cdn/img/Login.png)
+![App Detail Image](./src/assets/static_cdn/img/plan_detail.png)
 
 ## Install Instructions
 
