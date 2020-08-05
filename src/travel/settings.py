@@ -121,7 +121,7 @@ STATIC_URL = '/static/'
 
 #before deployment
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'./assets/local_static',)
+    os.path.join(BASE_DIR,'./assets', 'local_static')
 ]
 # print(STATICFILES_DIRS)
 
