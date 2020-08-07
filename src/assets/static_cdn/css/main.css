@@ -5,8 +5,9 @@
 body{
   /* background-color: #0f121f; */
   color: #000;
-  /* background-image: url(/static/travel_buddy/img/fly_with_me.jpg); */
-  background-image: url(/static/travel_buddy/img/window_light.jpg);
+  background-image: url(../../local_static/img/fly_with_me.jpg);
+  /* background-image: url(../img/fly_with_me.jpg); */
+  /* background-image: url(../img/window.jpg); */
   /* background-image: url(/static/travel_buddy/img/window.jpg); */
   -webkit-background-size: cover;
   -moz-background-size: cover;
