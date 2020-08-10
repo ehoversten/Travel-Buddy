@@ -1,0 +1,44 @@
+body {
+  /* background-color: #0f121f; */
+  background-image: url(../img/window.jpg);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#errors {
+  color: darkred;
+  font-weight: bold
+}
+
+.navbar {
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ccc;
+}
+
+.navbar img {
+  width: 60px;
+}
+
+/* .this_destination, .others_this_destination {
+  background: rgba(172, 184, 185, 0.66);
+  line-height: 1.5em;
+  padding: 10px 20px;
+  margin: 20px 0px;
+  border-radius: 15px;
+  border: 2px solid #7c7f88;
+} */
+/* 
+.others_this_destination {
+  text-align: center;
+} */
+
+.trip-form, .login-form, .register-form {
+  background: rgba(172, 184, 185, 0.66);
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: 2px solid #7c7f88;
+}
+
