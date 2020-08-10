@@ -1,6 +1,7 @@
 body {
   /* background-color: #0f121f; */
-  background-image: url(../img/window.jpg);
+  /* background-image: url(../img/window.jpg); */
+  background-image: url(../img/fly_with_me.jpg);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -21,6 +22,11 @@ body {
 .navbar img {
   width: 60px;
 }
+
+#icon-logo {
+  width: 80px;
+}
+
 
 /* .this_destination, .others_this_destination {
   background: rgba(172, 184, 185, 0.66);
